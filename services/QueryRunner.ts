@@ -5,10 +5,10 @@ class QueryRunner {
 
     constructor() {
         this.pool = mysql.createPool({
-            host: process.env.MLS_PREDICTOR_HOST,
-            user: process.env.MLS_PREDICTOR_USER,
-            password: process.env.MLS_PREDICTOR_PASSWORD,
-            database: process.env.MLS_PREDICTOR_DATABASE
+            host: process.env.MYSQL_HOST,
+            user: process.env.MYSQL_USER,
+            password: process.env.MYSQL_PASSWORD,
+            database: process.env.MYSQL_DATABASE
         });
     }
 
