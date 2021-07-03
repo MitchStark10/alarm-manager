@@ -68,4 +68,4 @@ class QueryRunner {
     }
 }
 
-module.exports = new QueryRunner();
+export default new QueryRunner();
