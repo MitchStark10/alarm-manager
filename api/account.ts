@@ -1,6 +1,7 @@
 import express from 'express';
 import mysql from 'mysql';
 import queryRunner from '../services/QueryRunner';
+import EncryptionUtils from '../services/EncryptionUtils';
 const app = express();
 
 const ADD_NEW_ACCOUNT_SQL = `
@@ -11,8 +12,7 @@ VALUES (?, ?, ?)
 
 app.post('/addAccount', async (req, res) => {
     const {email, password, apiKey} = req.body;
-    // TODO: Encrypt the password
-    const addNewAccountQuery = mysql.format(ADD_NEW_ACCOUNT_SQL, [email, password, apiKey]);
+    const addNewAccountQuery = mysql.format(ADD_NEW_ACCOUNT_SQL, [email, await EncryptionUtils.encryptPassword(password), apiKey]);
     const addNewAccountResult = await queryRunner.runQueryWithErrorHandling(addNewAccountQuery);
     res.status(addNewAccountResult.success ? 200 : 500).json(addNewAccountResult);
 });

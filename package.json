@@ -21,10 +21,12 @@
   },
   "homepage": "https://github.com/MitchStark10/log-manager#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.12",
     "@types/mysql": "^2.15.18",
     "@types/node": "^15.12.5",
