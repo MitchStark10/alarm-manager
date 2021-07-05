@@ -7,8 +7,12 @@ const handleError = (error: Error, reject: (error: Error) => void) => {
     reject(error);
 };
 
+const API_KEY_LENGTH = 50;
+const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+const CHAR_LENGTH = CHARACTERS.length;
+
 export default {
-    encryptPassword: (passwordToEncrypt: string) => {
+    encryptPassword: (passwordToEncrypt: string): Promise<string> => {
         return new Promise((resolve, reject) => {
             bcrypt.genSalt(SALT_ROUNDS, (saltErr, salt) => {
                 if (saltErr) {
@@ -26,7 +30,7 @@ export default {
         });
     },
 
-    comparePasswordToHash: (password: string, hash: string) => {
+    comparePasswordToHash: (password: string, hash: string): Promise<boolean> => {
         return new Promise((resolve, reject) => {
             bcrypt.compare(password, hash, (err, result) => {
                 if (err) {
@@ -36,5 +40,13 @@ export default {
                 resolve(result);
             });
         });
+    },
+
+    generateApiKey: (): string => {
+        let result = '';
+        for ( let i = 0; i < API_KEY_LENGTH; i++ ) {
+            result += CHARACTERS.charAt(Math.floor(Math.random() * CHAR_LENGTH));
+        }
+        return result;
     }
 };
