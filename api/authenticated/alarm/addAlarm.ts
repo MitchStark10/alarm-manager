@@ -16,4 +16,4 @@ app.post('/addAlarm', async (req, res) => {
     res.status(addNewAlarmResult.success ? 200 : 500).json(addNewAlarmResult);
 });
 
-module.exports = app;
+export default app;

@@ -17,4 +17,4 @@ app.post('/addAccount', async (req, res) => {
     res.status(addNewAccountResult.success ? 200 : 500).json(addNewAccountResult);
 });
 
-module.exports = app;
+export default app;
