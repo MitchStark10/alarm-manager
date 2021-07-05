@@ -9,7 +9,7 @@ INSERT INTO Alarm
 (?, ?, NOW())
 `;
 
-app.post('/addAlarm', async (req, res) => {
+app.post('', async (req, res) => {
     const {email, alarmText} = req.body;
     const addNewAlarmQuery = mysql.format(ADD_NEW_ACCOUNT_SQL, [email, alarmText]);
     const addNewAlarmResult = await queryRunner.runQueryWithErrorHandling(addNewAlarmQuery);

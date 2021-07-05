@@ -10,7 +10,7 @@ INSERT INTO Account
 VALUES (?, ?, ?)
 `;
 
-app.post('/addAccount', async (req, res) => {
+app.post('', async (req, res) => {
     const {email, password} = req.body;
     const addNewAccountQuery = mysql.format(ADD_NEW_ACCOUNT_SQL, [email, await EncryptionUtils.encryptPassword(password), EncryptionUtils.generateApiKey()]);
     const addNewAccountResult = await queryRunner.runQueryWithErrorHandling(addNewAccountQuery);
