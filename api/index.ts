@@ -1,9 +1,10 @@
 import express from 'express';
-import addAlarmService from './alarm/addAlarm';
-import retrieveAlarmService from './alarm/retrieveAlarms';
+import authenticatedServices from './authenticated';
+import publicServices from './public';
 const app = express();
 
-app.use('/alarm/addAlarm', addAlarmService);
-app.use('/alarm/retrieveAlarm', retrieveAlarmService);
+app.use('/authenticated', authenticatedServices);
+app.use('/public', publicServices);
+
 
 export default app;
