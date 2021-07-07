@@ -1,6 +1,6 @@
 import express from 'express';
 import mysql from 'mysql';
-import queryRunner from '../../../services/QueryRunner';
+import queryRunner from '../../services/QueryRunner';
 const app = express();
 
 // TODO: Pagination will (likely) be necessary with a larger data set
