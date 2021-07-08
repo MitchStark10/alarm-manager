@@ -1,5 +1,7 @@
 import React from 'react';
+import LoginNewUserPage from './pages/LoginNewUserPage';
 import './App.css';
+
 interface UserData {
   email: string | null,
   apiKey: string | null
@@ -45,7 +47,7 @@ function App() {
       </div>
     </AuthContext.Provider>
   ) : (
-    <p>TODO: Make this a login component</p>
+    <LoginNewUserPage />
   );
 }
 
