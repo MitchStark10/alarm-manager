@@ -27,7 +27,7 @@ export default function NewUser() {
 		};
 		fetch('/api/public/account/addAccount', requestOptions)
 			.then(response => response.json())
-			.then(data => setErrorText(data.toString(), 5000))
+			.then(data => setErrorText(JSON.stringify(data), 5000))
 			.catch(error => setErrorText(error, 5000));
 	}
 

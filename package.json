@@ -5,11 +5,11 @@
   "main": "dist/server.js",
   "scripts": {
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
-    "build": "tsc && cd client && npm install && npm run build",
+    "build": "tsc && cp .env ./dist && cd client && npm install && npm run build",
     "prestart": "npm run build",
     "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently --kill-others \"tsc -w\" \"nodemon .\" \"cd client && npm start\""
+    "dev": "cp .env ./dist && concurrently --kill-others \"tsc -w\" \"nodemon .\" \"cd client && npm start\""
   },
   "repository": {
     "type": "git",
