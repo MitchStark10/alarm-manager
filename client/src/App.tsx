@@ -1,6 +1,6 @@
 import React from 'react';
 import LoginNewUserPage from './pages/LoginNewUserPage';
-import './App.css';
+import './App.scss';
 
 interface UserData {
   email: string | null,
