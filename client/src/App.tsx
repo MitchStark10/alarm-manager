@@ -1,6 +1,7 @@
 import React from 'react';
 import LoginNewUserPage from './pages/LoginNewUserPage';
 import './App.scss';
+import LOGIN_STATES from './utils/LoginStates';
 
 interface UserData {
   email: string | null,
@@ -13,12 +14,6 @@ const EMPTY_USER_INFORMATION = {
 };
 
 const AuthContext = React.createContext<UserData>(EMPTY_USER_INFORMATION);
-
-const LOGIN_STATES = {
-  'LOADING': 'LOADING',
-  'LOGGED_IN': 'LOGGED_IN',
-  'UNAUTHENTICATED': 'UNAUTHENTICATED'
-};
 
 function App() {
   const [user, setUser] = React.useState<UserData>(EMPTY_USER_INFORMATION);
@@ -47,7 +42,9 @@ function App() {
       </div>
     </AuthContext.Provider>
   ) : (
-    <LoginNewUserPage />
+    <LoginNewUserPage 
+      setLoginState={setLoginState}
+    />
   );
 }
 

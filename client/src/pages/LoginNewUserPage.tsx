@@ -1,7 +1,13 @@
 import NewUser from '../components/user/NewUser';
 
-export default function LoginNewUserPage() {
+type LoginNewUserProps = {
+	setLoginState: (newValue: string) => void
+};
+
+export default function LoginNewUserPage({setLoginState}: LoginNewUserProps) {
 	return (
-		<NewUser />
+		<NewUser
+			setLoginState={setLoginState}
+		/>
 	)
 };

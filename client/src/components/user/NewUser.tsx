@@ -1,8 +1,13 @@
-import useInputState from "../../hooks/useInputState";
-import useTempText from "../../hooks/useTempText";
+import useInputState from '../../hooks/useInputState';
+import useTempText from '../../hooks/useTempText';
+import LOGIN_STATES from '../../utils/LoginStates';
 import './NewUser.scss';
 
-export default function NewUser() {
+type LoginNewUserProps = {
+	setLoginState: (newValue: string) => void
+};
+
+export default function NewUser({setLoginState}: LoginNewUserProps) {
 	const [email, , setEmailFromInput] = useInputState('');
 	const [password, , setPasswordFromInput] = useInputState('');
 	const [passwordConfirmation, , setConfirmationFromInput] = useInputState('');
@@ -27,7 +32,13 @@ export default function NewUser() {
 		};
 		fetch('/api/public/account/addAccount', requestOptions)
 			.then(response => response.json())
-			.then(data => setErrorText(JSON.stringify(data), 5000))
+			.then(data => {
+				if (data.success) {
+					setLoginState(LOGIN_STATES.LOGGED_IN);
+				} else {
+					setErrorText(data.message, 5000);
+				}
+			})
 			.catch(error => setErrorText(error, 5000));
 	}
 
