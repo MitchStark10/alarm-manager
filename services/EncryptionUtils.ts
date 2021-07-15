@@ -42,7 +42,7 @@ export default {
         });
     },
 
-    generateApiKey: (): string => {
+    generateKey: (): string => {
         let result = '';
         for ( let i = 0; i < API_KEY_LENGTH; i++ ) {
             result += CHARACTERS.charAt(Math.floor(Math.random() * CHAR_LENGTH));
