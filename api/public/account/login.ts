@@ -6,7 +6,7 @@ const app = express();
 
 const RETRIEVE_USER_SQL = `
 SELECT PassHash
-FROM User
+FROM Account
 WHERE Email = ?
 `;
 
