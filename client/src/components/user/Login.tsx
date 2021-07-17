@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import LoginNewUserProps from "../../types/LoginNewUserProps";
 import useInputState from "../../hooks/useInputState";
 import loginStates from "../../utils/LoginStates";
