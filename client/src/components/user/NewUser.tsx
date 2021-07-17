@@ -1,13 +1,10 @@
 import useInputState from '../../hooks/useInputState';
 import useTempText from '../../hooks/useTempText';
 import LOGIN_STATES from '../../utils/LoginStates';
+import LoginNewUserProps from '../../types/LoginNewUserProps';
 import './NewUser.scss';
 
-type LoginNewUserProps = {
-	setLoginState: (newValue: string) => void
-};
-
-export default function NewUser({setLoginState}: LoginNewUserProps) {
+export default function NewUser({ setLoginState, storeLoginInfo }: LoginNewUserProps) {
 	const [email, , setEmailFromInput] = useInputState('');
 	const [password, , setPasswordFromInput] = useInputState('');
 	const [passwordConfirmation, , setConfirmationFromInput] = useInputState('');
@@ -34,6 +31,7 @@ export default function NewUser({setLoginState}: LoginNewUserProps) {
 			.then(response => response.json())
 			.then(data => {
 				if (data.success) {
+					storeLoginInfo(email);
 					setLoginState(LOGIN_STATES.LOGGED_IN);
 				} else {
 					setErrorText(data.message, 5000);

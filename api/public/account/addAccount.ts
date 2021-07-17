@@ -16,18 +16,24 @@ VALUES (?, ?, ?, ?)
 app.post('', async (req, res) => {
     const {email, password} = req.body;
     const sessionCookie = EncryptionUtils.generateKey();
-    const addNewAccountQuery = mysql.format(ADD_NEW_ACCOUNT_SQL, [email, await EncryptionUtils.encryptPassword(password), EncryptionUtils.generateKey(), sessionCookie]);
-    const addNewAccountResult = await queryRunner.runQueryWithErrorHandling(addNewAccountQuery);
+    const addNewAccountQuery = mysql.format(ADD_NEW_ACCOUNT_SQL, [
+        email,
+        await EncryptionUtils.encryptPassword(password),
+        EncryptionUtils.generateKey(), sessionCookie,
+    ]);
+    const addNewAccountResult =
+        await queryRunner.runQueryWithErrorHandling(addNewAccountQuery);
 
     if (addNewAccountResult.success) {
         res.cookie('am-session', sessionCookie, {
             maxAge: COOKIE_MAX_AGE,
             httpOnly: true,
-            signed: true
+            signed: true,
         });
     }
 
-    res.status(addNewAccountResult.success ? 200 : 500).json(addNewAccountResult);
+    res.status(addNewAccountResult.success ? 200 : 500)
+        .json(addNewAccountResult);
 });
 
 export default app;

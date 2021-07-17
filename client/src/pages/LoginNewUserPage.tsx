@@ -1,13 +1,18 @@
+import Login from '../components/user/Login';
 import NewUser from '../components/user/NewUser';
+import LoginNewUserProps from '../types/LoginNewUserProps';
 
-type LoginNewUserProps = {
-	setLoginState: (newValue: string) => void
-};
-
-export default function LoginNewUserPage({setLoginState}: LoginNewUserProps) {
+export default function LoginNewUserPage({ setLoginState, storeLoginInfo }: LoginNewUserProps) {
 	return (
-		<NewUser
-			setLoginState={setLoginState}
-		/>
+		<>
+			<Login
+				setLoginState={setLoginState}
+				storeLoginInfo={storeLoginInfo}
+			/>
+			<NewUser
+				setLoginState={setLoginState}
+				storeLoginInfo={storeLoginInfo}
+			/>
+		</>
 	)
 };
