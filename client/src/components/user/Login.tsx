@@ -9,7 +9,8 @@ export default function Login({ storeLoginInfo, setLoginState }: LoginNewUserPro
     const [error, setError] = useState('');
 
     const submitLogin = () => {
-        fetch('/api/login', {
+        console.log('submitting');
+        fetch('/api/public/account/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -19,9 +20,11 @@ export default function Login({ storeLoginInfo, setLoginState }: LoginNewUserPro
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
+                    console.log('logged in');
                     storeLoginInfo(email);
                     setLoginState(loginStates.LOGGED_IN);
                 } else {
+                    console.log('login failed');
                     setError('Email or login is incorrect');
                 }
             })
@@ -32,12 +35,14 @@ export default function Login({ storeLoginInfo, setLoginState }: LoginNewUserPro
     };
 
     return (
-        <div>
-            <p>Login</p>
-            {error && <p className="error-text">{error}</p>}
-            <input type="text" placeholder="Email" value={email} onChange={setEmail}></input>
-            <input type="password" placeholder="Password" value={password} onChange={setPassword}></input>
-            <button type="button" onClick={submitLogin}>Submit</button>
-        </div>
+        <>
+            <div className="entry-form">
+                <h5>Login</h5>
+                {error && <p className="error-text">{error}</p>}
+                <input type="text" placeholder="Email" value={email} onChange={setEmail}></input>
+                <input type="password" placeholder="Password" value={password} onChange={setPassword}></input>
+                <button type="button" className="primary-button" onClick={submitLogin}>Submit</button>
+            </div>
+        </>
     )
 }

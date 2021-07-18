@@ -14,7 +14,7 @@ function App() {
   const [loginState, setLoginState] = React.useState(LOGIN_STATES.LOADING);
 
   React.useEffect(() => {
-    fetch('/api/auth/loginViaCookie', {
+    fetch('/api/public/account/loginWithCookie', {
       method: 'POST'
     }).then(response => response.json())
       .then(data => {
@@ -22,10 +22,13 @@ function App() {
           const email = localStorage.getItem('userEmail');
           email && setUser(email);
           setLoginState(email ? LOGIN_STATES.LOGGED_IN : LOGIN_STATES.UNAUTHENTICATED);
+        } else {
+          setLoginState(LOGIN_STATES.UNAUTHENTICATED);
         }
       })
       .catch(error => {
-        console.error('error occurred during cookie login');
+        console.error('error occurred during cookie login', error);
+        setLoginState(LOGIN_STATES.UNAUTHENTICATED);
       })
   }, []);
 
@@ -33,6 +36,7 @@ function App() {
     return null;
   }
 
+  console.log('here');
   return loginState === LOGIN_STATES.LOGGED_IN ? (
     <AuthContext.Provider value={user}>
       <div className="app">

@@ -13,25 +13,29 @@ WHERE Email = ?
 app.post('', async (req, res) => {
     const {email, password} = req.body;
     const retrieveUserQuery = mysql.format(RETRIEVE_USER_SQL, [email]);
-    const retrieveUserResponse = await queryRunner.runQueryWithErrorHandling(retrieveUserQuery);
+    const retrieveUserResponse =
+        await queryRunner.runQueryWithErrorHandling(retrieveUserQuery);
 
     if (!retrieveUserResponse.success) {
         return res.status(500).json({
             success: false,
-            message: 'Internal Error Occurred'
+            message: 'Internal Error Occurred',
         });
     }
 
     if (retrieveUserResponse.result.length !== 1) {
         return res.status(403).json({
             success: false,
-            message: 'User not found'
+            message: 'User not found',
         });
     }
 
     const passHash = retrieveUserResponse.result[0].PassHash;
-    const isPasswordCorrect = await EncryptionUtils.comparePasswordToHash(password, passHash);
-    res.status(isPasswordCorrect ? 200 : 403);
+    const isPasswordCorrect =
+        await EncryptionUtils.comparePasswordToHash(password, passHash);
+    res.status(isPasswordCorrect ? 200 : 403).json({
+        success: true,
+    });
 });
 
 export default app;
