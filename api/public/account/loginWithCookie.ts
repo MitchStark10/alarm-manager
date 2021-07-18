@@ -10,7 +10,7 @@ WHERE SessionCookie = ?
 `;
 
 app.post('', async (req, res) => {
-    const {sessionCookie} = req.body;
+    const sessionCookie = req.cookies?.['am-session'];
 
     if (!sessionCookie) {
         return res.status(403).json({

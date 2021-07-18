@@ -1,16 +1,18 @@
 import express from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 
 // ENV variables must be initialized before the API/QueryRunner initializes
-dotenv.config({ path: __dirname + '/.env' });
+dotenv.config({path: __dirname + '/.env'});
 import api from './api';
 const app = express();
 const port = process.env.PORT || 8080;
 
 // Use required middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 app.use('/api', api);
 

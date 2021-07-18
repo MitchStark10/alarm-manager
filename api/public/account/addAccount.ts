@@ -2,10 +2,9 @@ import express from 'express';
 import mysql from 'mysql';
 import queryRunner from '../../../services/QueryRunner';
 import EncryptionUtils from '../../../services/EncryptionUtils';
+import CookieManager from '../../../services/CookieManager';
 const app = express();
 
-// ms * s * m * h * d = 7 days
-const COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 7;
 
 const ADD_NEW_ACCOUNT_SQL = `
 INSERT INTO Account
@@ -25,11 +24,7 @@ app.post('', async (req, res) => {
         await queryRunner.runQueryWithErrorHandling(addNewAccountQuery);
 
     if (addNewAccountResult.success) {
-        res.cookie('am-session', sessionCookie, {
-            maxAge: COOKIE_MAX_AGE,
-            httpOnly: true,
-            signed: true,
-        });
+        CookieManager.setCookie(res, sessionCookie);
     }
 
     res.status(addNewAccountResult.success ? 200 : 500)

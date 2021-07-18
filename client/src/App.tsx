@@ -18,7 +18,7 @@ function App() {
       method: 'POST'
     }).then(response => response.json())
       .then(data => {
-        if (data.sucess) {
+        if (data.success) {
           const email = localStorage.getItem('userEmail');
           email && setUser(email);
           setLoginState(email ? LOGIN_STATES.LOGGED_IN : LOGIN_STATES.UNAUTHENTICATED);
@@ -36,7 +36,6 @@ function App() {
     return null;
   }
 
-  console.log('here');
   return loginState === LOGIN_STATES.LOGGED_IN ? (
     <AuthContext.Provider value={user}>
       <div className="app">
