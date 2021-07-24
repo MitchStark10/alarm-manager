@@ -9,7 +9,7 @@ FROM Account
 WHERE SessionCookie = ?
 `;
 
-app.post('', async (req, res) => {
+app.get('', async (req, res) => {
     const sessionCookie = req.cookies?.['am-session'];
 
     if (!sessionCookie) {

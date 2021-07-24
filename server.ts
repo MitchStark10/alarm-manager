@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
 
 // ENV variables must be initialized before the API/QueryRunner initializes
 dotenv.config({path: __dirname + '/.env'});

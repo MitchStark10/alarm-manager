@@ -2,32 +2,35 @@ import React from 'react';
 import LoginNewUserPage from './pages/LoginNewUserPage';
 import './App.scss';
 import LOGIN_STATES from './utils/LoginStates';
+import AlarmList from './components/AlarmList';
 
 const storeLoginInfo = (email: string) => {
   localStorage.setItem('userEmail', email);
 };
 
-const AuthContext = React.createContext<string | null>(null);
-
 function App() {
-  const [user, setUser] = React.useState<string | null>(null);
+  const [email, setEmail] = React.useState<string | null>(null);
   const [loginState, setLoginState] = React.useState(LOGIN_STATES.LOADING);
 
   React.useEffect(() => {
-    fetch('/api/public/account/loginWithCookie', {
-      method: 'POST'
-    }).then(response => response.json())
+
+    const email = localStorage.getItem('userEmail');
+
+    if (!email) {
+      setLoginState(LOGIN_STATES.UNAUTHENTICATED);
+      return;
+    }
+
+    fetch('/api/public/account/loginWithCookie').then(response => response.json())
       .then(data => {
         if (data.success) {
-          const email = localStorage.getItem('userEmail');
-          email && setUser(email);
-          setLoginState(email ? LOGIN_STATES.LOGGED_IN : LOGIN_STATES.UNAUTHENTICATED);
+          setEmail(email);
+          setLoginState(LOGIN_STATES.LOGGED_IN);
         } else {
           setLoginState(LOGIN_STATES.UNAUTHENTICATED);
         }
       })
       .catch(error => {
-        console.error('error occurred during cookie login', error);
         setLoginState(LOGIN_STATES.UNAUTHENTICATED);
       })
   }, []);
@@ -37,11 +40,7 @@ function App() {
   }
 
   return loginState === LOGIN_STATES.LOGGED_IN ? (
-    <AuthContext.Provider value={user}>
-      <div className="app">
-        <p>You are logged in.</p>
-      </div>
-    </AuthContext.Provider>
+      <AlarmList email={email!}/>
   ) : (
     <LoginNewUserPage
       setLoginState={setLoginState}
