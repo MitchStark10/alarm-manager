@@ -6,7 +6,7 @@ const app = express();
 const ADD_NEW_ACCOUNT_SQL = `
 INSERT INTO Alarm
 (Email, AlarmText, AlarmDateTime)
-(?, ?, NOW())
+VALUES (?, ?, NOW())
 `;
 
 app.post('', async (req, res) => {
