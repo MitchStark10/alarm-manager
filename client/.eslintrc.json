@@ -3,8 +3,5 @@
         "browser": true,
         "es2021": true,
         "node": false
-    },
-    "rules": {
-        "require-jsdoc": "off"
     }
 }

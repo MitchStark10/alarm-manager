@@ -48,5 +48,5 @@ export default {
             result += CHARACTERS.charAt(Math.floor(Math.random() * CHAR_LENGTH));
         }
         return result;
-    }
+    },
 };

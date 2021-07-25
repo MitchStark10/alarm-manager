@@ -1,4 +1,4 @@
-import { Request, Response} from 'express';
+import {Request, Response} from 'express';
 
 // ms * s * m * h * d = 7 days
 const COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 7;

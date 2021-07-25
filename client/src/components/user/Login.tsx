@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import LoginNewUserProps from "../../types/LoginNewUserProps";
-import useInputState from "../../hooks/useInputState";
-import loginStates from "../../utils/LoginStates";
+import {useState} from 'react';
+import LoginNewUserProps from '../../types/LoginNewUserProps';
+import useInputState from '../../hooks/useInputState';
+import loginStates from '../../utils/LoginStates';
 
-export default function Login({ storeLoginInfo, setLoginState }: LoginNewUserProps) {
+export default function Login({storeLoginInfo, setLoginState}: LoginNewUserProps) {
     const [email, , setEmail] = useInputState('');
     const [password, , setPassword] = useInputState('');
     const [error, setError] = useState('');
@@ -13,12 +13,12 @@ export default function Login({ storeLoginInfo, setLoginState }: LoginNewUserPro
         fetch('/api/public/account/login', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({email, password}),
         })
-            .then(response => response.json())
-            .then(data => {
+            .then((response) => response.json())
+            .then((data) => {
                 if (data.success) {
                     console.log('logged in');
                     storeLoginInfo(email);
@@ -44,5 +44,5 @@ export default function Login({ storeLoginInfo, setLoginState }: LoginNewUserPro
                 <button type="button" className="primary-button" onClick={submitLogin}>Submit</button>
             </div>
         </>
-    )
+    );
 }

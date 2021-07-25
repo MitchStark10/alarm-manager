@@ -13,5 +13,5 @@ export default {
         const checkAuthQuery = mysql.format(CHECK_AUTHORIZATION_SQL, [userEmail, apiKey, cookie]);
         const checkAuthResults = await queryRunner.runQueryWithErrorHandling(checkAuthQuery);
         return checkAuthResults.success && checkAuthResults.result?.[0]?.UserCount === 1;
-    }
+    },
 };

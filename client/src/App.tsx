@@ -5,48 +5,47 @@ import LOGIN_STATES from './utils/LoginStates';
 import AlarmList from './components/alarms/AlarmList';
 
 const storeLoginInfo = (email: string) => {
-  localStorage.setItem('userEmail', email);
+    localStorage.setItem('userEmail', email);
 };
 
 function App() {
-  const [email, setEmail] = React.useState<string | null>(null);
-  const [loginState, setLoginState] = React.useState(LOGIN_STATES.LOADING);
+    const [email, setEmail] = React.useState<string | null>(null);
+    const [loginState, setLoginState] = React.useState(LOGIN_STATES.LOADING);
 
-  React.useEffect(() => {
+    React.useEffect(() => {
+        const email = localStorage.getItem('userEmail');
 
-    const email = localStorage.getItem('userEmail');
+        if (!email) {
+            setLoginState(LOGIN_STATES.UNAUTHENTICATED);
+            return;
+        }
 
-    if (!email) {
-      setLoginState(LOGIN_STATES.UNAUTHENTICATED);
-      return;
+        fetch('/api/public/account/loginWithCookie').then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    setEmail(email);
+                    setLoginState(LOGIN_STATES.LOGGED_IN);
+                } else {
+                    setLoginState(LOGIN_STATES.UNAUTHENTICATED);
+                }
+            })
+            .catch((error) => {
+                setLoginState(LOGIN_STATES.UNAUTHENTICATED);
+            });
+    }, []);
+
+    if (loginState === LOGIN_STATES.LOADING) {
+        return null;
     }
 
-    fetch('/api/public/account/loginWithCookie').then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          setEmail(email);
-          setLoginState(LOGIN_STATES.LOGGED_IN);
-        } else {
-          setLoginState(LOGIN_STATES.UNAUTHENTICATED);
-        }
-      })
-      .catch(error => {
-        setLoginState(LOGIN_STATES.UNAUTHENTICATED);
-      })
-  }, []);
-
-  if (loginState === LOGIN_STATES.LOADING) {
-    return null;
-  }
-
-  return loginState === LOGIN_STATES.LOGGED_IN ? (
-      <AlarmList email={email!}/>
-  ) : (
-    <LoginNewUserPage
-      setLoginState={setLoginState}
-      storeLoginInfo={storeLoginInfo}
-    />
-  );
+    return loginState === LOGIN_STATES.LOGGED_IN ? (
+        <AlarmList email={email!}/>
+    ) : (
+        <LoginNewUserPage
+            setLoginState={setLoginState}
+            storeLoginInfo={storeLoginInfo}
+        />
+    );
 }
 
 export default App;

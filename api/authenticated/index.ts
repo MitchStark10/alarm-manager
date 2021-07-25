@@ -12,10 +12,10 @@ app.use(async (req, res, next) => {
     if (await AuthUtils.isUserAuthorized(email, apiKey, cookie)) {
         next();
     } else {
-        console.log('returning 401')
+        console.log('returning 401');
         res.status(401).json({
             success: false,
-            message: 'You are not authenticated. Please authenticate and then try again.'
+            message: 'You are not authenticated. Please authenticate and then try again.',
         });
     }
 });

@@ -23,7 +23,8 @@
     "rules": {
         "indent": ["error", 4],
         "quotes": ["warn", "single"],
-        "max-len": ["warn", 120]
+        "max-len": ["warn", 120],
+        "require-jsdoc": "off"
     },
     "overrides": [
         {

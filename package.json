@@ -9,7 +9,8 @@
     "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cp .env ./dist/ && concurrently --kill-others \"tsc -w\" \"nodemon .\" \"cd client && npm start\"",
-    "postinstall": "cd client && npm i"
+    "postinstall": "cd client && npm i",
+    "lint": "eslint \"**/*.{ts,tsx}\" --fix"
   },
   "repository": {
     "type": "git",

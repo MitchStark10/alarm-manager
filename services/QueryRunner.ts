@@ -1,4 +1,4 @@
-import mysql, { PoolConnection, Pool, MysqlError } from 'mysql';
+import mysql, {PoolConnection, Pool, MysqlError} from 'mysql';
 
 class QueryRunner {
     pool: Pool;
@@ -8,7 +8,7 @@ class QueryRunner {
             host: process.env.MYSQL_HOST,
             user: process.env.MYSQL_USER,
             password: process.env.MYSQL_PASSWORD,
-            database: process.env.MYSQL_DATABASE
+            database: process.env.MYSQL_DATABASE,
         });
     }
 
@@ -56,13 +56,13 @@ class QueryRunner {
         try {
             return {
                 success: true,
-                result: await this.runQuery(sqlQuery)
+                result: await this.runQuery(sqlQuery),
             };
         } catch (error) {
             console.error('Error caught during query:' + error);
             return {
                 success: false,
-                error
+                error,
             };
         }
     }
