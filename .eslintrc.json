@@ -22,6 +22,12 @@
     ],
     "rules": {
         "indent": ["error", 4],
-        "quotes": ["single", "warn"]
-    }
+        "quotes": ["warn", "single"],
+        "max-len": ["warn", 120]
+    },
+    "overrides": [
+        {
+            "files": "*.ts, *.tsx"
+        }
+    ]
 }

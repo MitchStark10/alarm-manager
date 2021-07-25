@@ -2,7 +2,7 @@ import React from 'react';
 import LoginNewUserPage from './pages/LoginNewUserPage';
 import './App.scss';
 import LOGIN_STATES from './utils/LoginStates';
-import AlarmList from './components/AlarmList';
+import AlarmList from './components/alarms/AlarmList';
 
 const storeLoginInfo = (email: string) => {
   localStorage.setItem('userEmail', email);

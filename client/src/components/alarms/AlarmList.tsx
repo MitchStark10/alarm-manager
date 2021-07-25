@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
+import AlarmCard from "./AlarmCard";
+import { AlarmData } from './AlarmTypes';
 
 interface AlarmListProps {
 	email: string
 }
 
 export default function AlarmList({ email }: AlarmListProps) {
-	const [alarmList, setAlarmList] = useState([]);
+	const [alarmList, setAlarmList] = useState<Array<AlarmData>>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState('');
 
 	useEffect(() => {
-		console.log('email', email);
 		const fetchData = {
 			email
 		};
@@ -23,12 +24,11 @@ export default function AlarmList({ email }: AlarmListProps) {
 		})
 		.then(data => data.json())
 		.then(response => {
-			console.log("response", response);
 			if (response.success) {
 				setAlarmList(response.result)
 			} else {
 				console.error(response);
-				setError(response.error || response);
+				setError(response.message || response);
 			}
 		})
 		.catch(error => {
@@ -37,7 +37,6 @@ export default function AlarmList({ email }: AlarmListProps) {
 		})
 		.finally(() => setIsLoading(false));
 	}, [email]);
-	console.log('isLoading', isLoading);
 
 	if (isLoading) {
 		return <p>Loading...</p>;
@@ -45,8 +44,15 @@ export default function AlarmList({ email }: AlarmListProps) {
 
 	return (
 		<>
-		{error && <p className="error-text">{error}</p>}
-		{alarmList.length ? <p>Alarms found</p> : <p>No alarms found</p>}
+		{error && <p className="error-text">{error.toString()}</p>}
+		{alarmList.length ?
+			(<>
+				<p>Alarms found</p>
+				{alarmList.map((alarmData) => <AlarmCard data={alarmData} key={alarmData.ID} />)}
+			</>)
+			:
+			<p>No alarms found</p>
+		}
 		</>
 	);
 };
