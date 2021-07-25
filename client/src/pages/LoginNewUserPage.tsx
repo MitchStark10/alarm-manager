@@ -1,3 +1,4 @@
+import React from 'react';
 import Login from '../components/user/Login';
 import NewUser from '../components/user/NewUser';
 import LoginNewUserProps from '../types/LoginNewUserProps';
