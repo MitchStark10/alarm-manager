@@ -1,6 +1,7 @@
 import React from 'react';
 import LoginNewUserPage from './pages/LoginNewUserPage';
 import './App.scss';
+import 'bootstrap/dist/css/bootstrap.css';
 import LOGIN_STATES from './utils/LoginStates';
 import AlarmList from './components/alarms/AlarmList';
 
