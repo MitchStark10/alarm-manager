@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cp .env ./dist/ && concurrently --kill-others \"tsc -w\" \"nodemon .\" \"cd client && npm start\"",
     "postinstall": "cd client && npm i",
-    "lint": "eslint \"**/*.{ts,tsx}\" --fix"
+    "lint": "eslint --fix"
   },
   "repository": {
     "type": "git",
@@ -47,8 +47,13 @@
     "eslint": "^7.30.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-react": "^7.24.0",
+    "husky": "^7.0.1",
+    "lint-staged": "^11.1.1",
     "nodemon": "^2.0.10",
     "react-scripts": "^4.0.3",
     "typescript": "^4.3.4"
+  },
+  "lint-staged": {
+    "**.{ts,tsx}": "npm run lint"
   }
 }
