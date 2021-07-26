@@ -37,7 +37,7 @@ export default function Login({storeLoginInfo, setLoginState}: LoginNewUserProps
 
     return (
         <>
-            <div className="entry-form">
+            <div className="entry-form border-bottom border-dark pb-3 mb-3 w-50 mt-3">
                 <h5>Login</h5>
                 {error && <p className="error-text">{error}</p>}
                 <input type="text" placeholder="Email" value={email} onChange={setEmail}></input>

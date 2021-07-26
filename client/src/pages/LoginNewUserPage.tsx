@@ -5,7 +5,7 @@ import LoginNewUserProps from '../types/LoginNewUserProps';
 
 export default function LoginNewUserPage({setLoginState, storeLoginInfo}: LoginNewUserProps) {
     return (
-        <>
+        <div className="d-flex flex-column justify-content-center align-items-center">
             <Login
                 setLoginState={setLoginState}
                 storeLoginInfo={storeLoginInfo}
@@ -14,6 +14,6 @@ export default function LoginNewUserPage({setLoginState, storeLoginInfo}: LoginN
                 setLoginState={setLoginState}
                 storeLoginInfo={storeLoginInfo}
             />
-        </>
+        </div>
     );
 };
