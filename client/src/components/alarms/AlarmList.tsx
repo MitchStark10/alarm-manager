@@ -46,7 +46,7 @@ export default function AlarmList({email}: AlarmListProps) {
         <>
             {error && <p className="error-text">{error.toString()}</p>}
             {alarmList.length ?
-                (<div className={"d-flex flex-column justify-content-center align-items-center"}>
+                (<div className="d-flex flex-column justify-content-center align-items-center">
                     <h3 className="border-bottom border-dark px-5 mb-3">Alarms found</h3>
                     {alarmList.map((alarmData) => <AlarmCard data={alarmData} key={alarmData.ID} />)}
                 </div>) :
