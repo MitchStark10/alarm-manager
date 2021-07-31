@@ -18,10 +18,12 @@ WHERE Email = ?
 `;
 
 app.post('', async (req, res) => {
-    const {email, password} = req.body;
+    const { email, password } = req.body;
     const retrieveUserQuery = mysql.format(RETRIEVE_USER_SQL, [email]);
-    const retrieveUserResponse =
-        await queryRunner.runQueryWithErrorHandling(retrieveUserQuery);
+    const retrieveUserResponse = await queryRunner.runQueryWithErrorHandling(
+        retrieveUserQuery,
+        false,
+    );
 
     if (!retrieveUserResponse.success) {
         return res.status(500).json({
@@ -38,14 +40,18 @@ app.post('', async (req, res) => {
     }
 
     const passHash = retrieveUserResponse.result[0].PassHash;
-    const isPasswordCorrect =
-        await EncryptionUtils.comparePasswordToHash(password, passHash);
+    const isPasswordCorrect = await EncryptionUtils.comparePasswordToHash(
+        password,
+        passHash,
+    );
 
     if (isPasswordCorrect) {
         const sessionCookie = EncryptionUtils.generateKey();
-        const insertCookieQuery =
-            mysql.format(STORE_USER_COOKIE_SQL, [sessionCookie, email]);
-        queryRunner.runQueryWithErrorHandling(insertCookieQuery);
+        const insertCookieQuery = mysql.format(STORE_USER_COOKIE_SQL, [
+            sessionCookie,
+            email,
+        ]);
+        queryRunner.runQueryWithErrorHandling(insertCookieQuery, false);
         CookieManager.setCookie(res, sessionCookie);
     }
 

@@ -1,4 +1,4 @@
-import mysql, {PoolConnection, Pool, MysqlError} from 'mysql';
+import mysql, { PoolConnection, Pool, MysqlError } from 'mysql';
 
 class QueryRunner {
     pool: Pool;
@@ -22,44 +22,49 @@ class QueryRunner {
         console.error('Error performing: ' + sqlQuery + '\n' + error + '\n\n');
     }
 
-    async runQuery(sqlQuery: string): Promise<any> {
+    async runQuery(sqlQuery: string, withLog: boolean = true): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.pool.getConnection((err: MysqlError, connection: PoolConnection) => {
-                if (err) {
-                    this.logError(sqlQuery, err);
-                    reject(err);
-                    return;
-                }
-
-                if (!connection) {
-                    reject(new Error('Connection to DB was not created'));
-                    return;
-                }
-
-                connection.query(sqlQuery, (queryError, response) => {
-                    if (queryError) {
-                        this.logError(sqlQuery, queryError);
-                        reject(queryError);
+            this.pool.getConnection(
+                (err: MysqlError, connection: PoolConnection) => {
+                    if (err) {
+                        withLog && this.logError(sqlQuery, err);
+                        reject(err);
                         return;
                     }
 
-                    this.logQueryResponse(sqlQuery, response);
-                    resolve(response);
-                });
+                    if (!connection) {
+                        reject(new Error('Connection to DB was not created'));
+                        return;
+                    }
 
-                connection.release();
-            });
+                    connection.query(sqlQuery, (queryError, response) => {
+                        if (queryError) {
+                            withLog && this.logError(sqlQuery, queryError);
+                            reject(queryError);
+                            return;
+                        }
+
+                        withLog && this.logQueryResponse(sqlQuery, response);
+                        resolve(response);
+                    });
+
+                    connection.release();
+                },
+            );
         });
     }
 
-    async runQueryWithErrorHandling(sqlQuery: string): Promise<any> {
+    async runQueryWithErrorHandling(
+        sqlQuery: string,
+        withLog: boolean = true,
+    ): Promise<any> {
         try {
             return {
                 success: true,
                 result: await this.runQuery(sqlQuery),
             };
         } catch (error) {
-            console.error('Error caught during query:' + error);
+            withLog && console.error('Error caught during query:' + error);
             return {
                 success: false,
                 error,
