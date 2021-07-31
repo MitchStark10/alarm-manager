@@ -4,14 +4,16 @@ import './App.scss';
 import 'bootstrap/dist/css/bootstrap.css';
 import LOGIN_STATES from './utils/LoginStates';
 import AlarmList from './components/alarms/AlarmList';
-
-const storeLoginInfo = (email: string) => {
-    localStorage.setItem('userEmail', email);
-};
+import { useCallback } from 'react';
 
 function App() {
     const [email, setEmail] = React.useState<string | null>(null);
     const [loginState, setLoginState] = React.useState(LOGIN_STATES.LOADING);
+
+    const storeLoginInfo = useCallback((email: string) => {
+        localStorage.setItem('userEmail', email);
+        setEmail(email);
+    }, []);
 
     React.useEffect(() => {
         const email = localStorage.getItem('userEmail');
@@ -20,6 +22,8 @@ function App() {
             setLoginState(LOGIN_STATES.UNAUTHENTICATED);
             return;
         }
+
+        console.log('attempting to login', email);
 
         fetch('/api/public/account/loginWithCookie')
             .then((response) => response.json())
