@@ -4,10 +4,7 @@
         "es2021": true,
         "node": true
     },
-    "extends": [
-        "plugin:react/recommended",
-        "google"
-    ],
+    "extends": ["plugin:react/recommended", "google"],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaFeatures": {
@@ -16,15 +13,14 @@
         "ecmaVersion": 12,
         "sourceType": "module"
     },
-    "plugins": [
-        "react",
-        "@typescript-eslint"
-    ],
+    "plugins": ["react", "@typescript-eslint"],
     "rules": {
         "indent": ["error", 4],
         "quotes": ["warn", "single"],
         "max-len": ["warn", 120],
-        "require-jsdoc": "off"
+        "require-jsdoc": "off",
+        "object-curly-spacing": "off",
+        "no-debugger": "error"
     },
     "overrides": [
         {

@@ -21,7 +21,8 @@ function App() {
             return;
         }
 
-        fetch('/api/public/account/loginWithCookie').then((response) => response.json())
+        fetch('/api/public/account/loginWithCookie')
+            .then((response) => response.json())
             .then((data) => {
                 if (data.success) {
                     setEmail(email);
@@ -42,7 +43,7 @@ function App() {
     }
 
     return loginState === LOGIN_STATES.LOGGED_IN ? (
-        <AlarmList email={email!}/>
+        <AlarmList email={email!} />
     ) : (
         <LoginNewUserPage
             setLoginState={setLoginState}

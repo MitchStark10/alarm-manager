@@ -47,7 +47,13 @@ export default function NewUser({setLoginState, storeLoginInfo}: LoginNewUserPro
             {errorText && <p className="error-text">{errorText}</p>}
             <input type="text" placeholder="Email" value={email} onChange={setEmailFromInput}></input>
             <input type="password" placeholder="Password" value={password} onChange={setPasswordFromInput}></input>
-            <input type="password" placeholder="Confirm Password" value={passwordConfirmation} onChange={setConfirmationFromInput}></input>
+            <input
+                type="password"
+                placeholder="Confirm Password"
+                value={passwordConfirmation}
+                onChange={setConfirmationFromInput}>
+
+            </input>
             <button className="primary-button" type="button" onClick={onSubmitNewUser}>SUBMIT</button>
         </div>
     );

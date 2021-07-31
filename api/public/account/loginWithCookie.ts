@@ -20,18 +20,23 @@ app.get('', async (req, res) => {
         });
     }
 
-    const retrieveUserQuery = mysql.format(RETRIEVE_USER_FROM_COOKIE,
-        [sessionCookie]);
-    const retrieveUserResponse =
-        await QueryRunner.runQueryWithErrorHandling(retrieveUserQuery);
+    const retrieveUserQuery = mysql.format(RETRIEVE_USER_FROM_COOKIE, [
+        sessionCookie,
+    ]);
+    const retrieveUserResponse = await QueryRunner.runQueryWithErrorHandling(
+        retrieveUserQuery,
+    );
 
-    const isUserAuthenticated = retrieveUserResponse.success && retrieveUserResponse.length === 1;
+    const isUserAuthenticated =
+        retrieveUserResponse.success &&
+        retrieveUserResponse.result?.length === 1;
+
     if (!isUserAuthenticated) {
+        console.log('unsetting cookie', retrieveUserResponse.result?.length);
         CookieManager.unsetCookie(res);
     }
 
-    res.status(isUserAuthenticated ? 200 : 403)
-        .json(retrieveUserResponse);
+    res.status(isUserAuthenticated ? 200 : 403).json(retrieveUserResponse);
 });
 
 export default app;

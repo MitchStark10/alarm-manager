@@ -18,10 +18,10 @@ const CookieManager = {
 
     unsetCookie: (res: Response) => {
         res.cookie(COOKIE_ID, '', {
-            maxAge: -1,
-            secure: false
-        })
-    }
+            maxAge: 0,
+            secure: false,
+        });
+    },
 };
 
 export default CookieManager;
