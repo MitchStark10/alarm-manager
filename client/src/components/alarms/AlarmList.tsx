@@ -1,15 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import useToggle from '../../hooks/useToggle';
 import AlarmCard from './AlarmCard';
-import {AlarmData} from './AlarmTypes';
+import { AlarmData } from './AlarmTypes';
 
 interface AlarmListProps {
-    email: string
+    email: string;
 }
 
-export default function AlarmList({email}: AlarmListProps) {
+export default function AlarmList({ email }: AlarmListProps) {
     const [alarmList, setAlarmList] = useState<Array<AlarmData>>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
+    const [toggleToRefreshList, forceAlarmListRefresh] = useToggle();
 
     useEffect(() => {
         const fetchData = {
@@ -36,7 +38,7 @@ export default function AlarmList({email}: AlarmListProps) {
                 setError(error.toString());
             })
             .finally(() => setIsLoading(false));
-    }, [email]);
+    }, [email, toggleToRefreshList]);
 
     if (isLoading) {
         return <p>Loading...</p>;
@@ -45,13 +47,22 @@ export default function AlarmList({email}: AlarmListProps) {
     return (
         <>
             {error && <p className="error-text">{error.toString()}</p>}
-            {alarmList.length ?
-                (<div className="d-flex flex-column justify-content-center align-items-center">
-                    <h3 className="border-bottom border-dark px-5 mb-3">Alarms found</h3>
-                    {alarmList.map((alarmData) => <AlarmCard data={alarmData} key={alarmData.ID} />)}
-                </div>) :
+            {alarmList.length ? (
+                <div className="d-flex flex-column justify-content-center align-items-center">
+                    <h3 className="border-bottom border-dark px-5 mb-3">
+                        Alarms found
+                    </h3>
+                    {alarmList.map((alarmData) => (
+                        <AlarmCard
+                            refreshAlarmList={forceAlarmListRefresh}
+                            data={alarmData}
+                            key={alarmData.ID}
+                        />
+                    ))}
+                </div>
+            ) : (
                 <p>No alarms found</p>
-            }
+            )}
         </>
     );
-};
+}
