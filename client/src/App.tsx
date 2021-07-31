@@ -23,8 +23,6 @@ function App() {
             return;
         }
 
-        console.log('attempting to login', email);
-
         fetch('/api/public/account/loginWithCookie')
             .then((response) => response.json())
             .then((data) => {

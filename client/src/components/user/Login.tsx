@@ -13,7 +13,6 @@ export default function Login({
     const [error, setError] = useState('');
 
     const submitLogin = () => {
-        console.log('submitting');
         fetch('/api/public/account/login', {
             method: 'POST',
             headers: {
@@ -27,7 +26,6 @@ export default function Login({
                     storeLoginInfo(email);
                     setLoginState(loginStates.LOGGED_IN);
                 } else {
-                    console.log('login failed');
                     setError('Email or login is incorrect');
                 }
             })

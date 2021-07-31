@@ -32,7 +32,6 @@ app.get('', async (req, res) => {
         retrieveUserResponse.result?.length === 1;
 
     if (!isUserAuthenticated) {
-        console.log('unsetting cookie', retrieveUserResponse.result?.length);
         CookieManager.unsetCookie(res);
     }
 
