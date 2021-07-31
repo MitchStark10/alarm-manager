@@ -24,14 +24,15 @@ function App() {
         fetch('/api/public/account/loginWithCookie').then((response) => response.json())
             .then((data) => {
                 if (data.success) {
-                    console.log('seetting logged in: ', data);
                     setEmail(email);
                     setLoginState(LOGIN_STATES.LOGGED_IN);
                 } else {
+                    storeLoginInfo('');
                     setLoginState(LOGIN_STATES.UNAUTHENTICATED);
                 }
             })
             .catch(() => {
+                storeLoginInfo('');
                 setLoginState(LOGIN_STATES.UNAUTHENTICATED);
             });
     }, []);

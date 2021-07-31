@@ -1,5 +1,6 @@
 import express from 'express';
 import mysql from 'mysql';
+import CookieManager from '../../../services/CookieManager';
 import QueryRunner from '../../../services/QueryRunner';
 const app = express();
 
@@ -24,7 +25,12 @@ app.get('', async (req, res) => {
     const retrieveUserResponse =
         await QueryRunner.runQueryWithErrorHandling(retrieveUserQuery);
 
-    res.status(retrieveUserResponse.success ? 200 : 403)
+    const isUserAuthenticated = retrieveUserResponse.success && retrieveUserResponse.length === 1;
+    if (!isUserAuthenticated) {
+        CookieManager.unsetCookie(res);
+    }
+
+    res.status(isUserAuthenticated ? 200 : 403)
         .json(retrieveUserResponse);
 });
 

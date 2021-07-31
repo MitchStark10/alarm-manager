@@ -15,6 +15,13 @@ const CookieManager = {
             secure: false,
         });
     },
+
+    unsetCookie: (res: Response) => {
+        res.cookie(COOKIE_ID, '', {
+            maxAge: -1,
+            secure: false
+        })
+    }
 };
 
 export default CookieManager;

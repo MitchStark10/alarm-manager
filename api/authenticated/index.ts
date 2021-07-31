@@ -3,6 +3,7 @@ import addAlarm from './alarm/addAlarm';
 import retrieveAlarms from './alarm/retrieveAlarms';
 import AuthUtils from '../../services/AuthUtils';
 import CookieManager from '../../services/CookieManager';
+import deleteAlarm from './alarm/deleteAlarm';
 const app = express();
 
 app.use(async (req, res, next) => {
@@ -22,5 +23,6 @@ app.use(async (req, res, next) => {
 
 app.use('/alarm/addAlarm', addAlarm);
 app.use('/alarm/retrieveAlarms', retrieveAlarms);
+app.use('/alarm/deleteAlarm', deleteAlarm);
 
 export default app;
