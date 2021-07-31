@@ -1,8 +1,7 @@
-import React from 'react';
-import { AlarmData } from './AlarmTypes';
-import Card from 'react-bootstrap/Card';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import { useState } from 'react';
+import Card from 'react-bootstrap/Card';
+import { AlarmData } from './AlarmTypes';
 
 interface AlarmCardProps {
     data: AlarmData;
@@ -32,7 +31,7 @@ export default function AlarmCard({ data, refreshAlarmList }: AlarmCardProps) {
     };
 
     return (
-        <Card style={{ width: '18rem' }}>
+        <Card style={{ width: '18rem', marginBottom: '10px' }}>
             <Card.Body>
                 <Card.Title>{data.AlarmText}</Card.Title>
                 <Card.Text>{data.AlarmDateTime}</Card.Text>
