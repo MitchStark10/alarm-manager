@@ -23,7 +23,7 @@ export default function Header({ userEmail }: HeaderProps) {
                         </Navbar.Text>
                     ) : (
                         <Nav className="user">
-                            <Button href="/sign-in">Sign In</Button>
+                            <Button href="/login">Sign In</Button>
                         </Nav>
                     )}
                 </Navbar.Collapse>

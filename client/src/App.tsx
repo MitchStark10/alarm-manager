@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React, { useCallback } from 'react';
-import { Route, Router, Switch, useHistory } from 'react-router';
+import { Route, Switch } from 'react-router';
+import { BrowserRouter } from 'react-router-dom';
 import './App.scss';
 import AlarmList from './components/alarms/AlarmList';
 import Header from './components/Header';
@@ -10,7 +11,6 @@ import LOGIN_STATES from './utils/LoginStates';
 function App() {
     const [email, setEmail] = React.useState<string | null>(null);
     const [loginState, setLoginState] = React.useState(LOGIN_STATES.LOADING);
-    const history = useHistory();
 
     const storeLoginInfo = useCallback((email: string) => {
         localStorage.setItem('userEmail', email);
@@ -46,20 +46,10 @@ function App() {
         return null;
     }
 
-    const mainContent =
-        loginState === LOGIN_STATES.LOGGED_IN ? (
-            <AlarmList email={email!} />
-        ) : (
-            <LoginNewUserPage
-                setLoginState={setLoginState}
-                storeLoginInfo={storeLoginInfo}
-            />
-        );
-
     return (
         <>
             <Header userEmail={email} />
-            <Router history={history}>
+            <BrowserRouter>
                 <Switch>
                     <Route path="/login">
                         <LoginNewUserPage
@@ -71,8 +61,7 @@ function App() {
                         <AlarmList email={email} />
                     </Route>
                 </Switch>
-            </Router>
-            {mainContent}
+            </BrowserRouter>
         </>
     );
 }

@@ -1,7 +1,7 @@
-import React from 'react';
-import { useState } from 'react';
-import LoginNewUserProps from '../../types/LoginNewUserProps';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 import useInputState from '../../hooks/useInputState';
+import LoginNewUserProps from '../../types/LoginNewUserProps';
 import loginStates from '../../utils/LoginStates';
 
 export default function Login({
@@ -11,6 +11,7 @@ export default function Login({
     const [email, , setEmail] = useInputState('');
     const [password, , setPassword] = useInputState('');
     const [error, setError] = useState('');
+    const history = useHistory();
 
     const submitLogin = () => {
         fetch('/api/public/account/login', {
@@ -25,6 +26,7 @@ export default function Login({
                 if (data.success) {
                     storeLoginInfo(email);
                     setLoginState(loginStates.LOGGED_IN);
+                    history.push('/');
                 } else {
                     setError('Email or login is incorrect');
                 }

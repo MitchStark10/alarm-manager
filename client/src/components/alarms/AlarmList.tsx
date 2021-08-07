@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import useToggle from '../../hooks/useToggle';
 import AlarmCard from './AlarmCard';
 import { AlarmData } from './AlarmTypes';
@@ -12,6 +13,12 @@ export default function AlarmList({ email }: AlarmListProps) {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
     const [toggleToRefreshList, forceAlarmListRefresh] = useToggle();
+    const history = useHistory();
+
+    if (!email) {
+        history.push('/login');
+        return null;
+    }
 
     useEffect(() => {
         const fetchData = {
