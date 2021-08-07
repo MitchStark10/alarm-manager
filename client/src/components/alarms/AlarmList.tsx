@@ -4,7 +4,7 @@ import AlarmCard from './AlarmCard';
 import { AlarmData } from './AlarmTypes';
 
 interface AlarmListProps {
-    email: string;
+    email?: string | null;
 }
 
 export default function AlarmList({ email }: AlarmListProps) {
