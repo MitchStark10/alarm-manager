@@ -1,9 +1,30 @@
 import React from 'react';
+import { Button, Container, Nav, Navbar } from 'react-bootstrap';
 
-export default function Header() {
+interface HeaderProps {
+    userEmail?: string | null;
+}
+
+export default function Header({ userEmail }: HeaderProps) {
     return (
-        <div>
-            <p>Header Content</p>
-        </div>
+        <Navbar bg="dark" variant="dark">
+            <Container>
+                <Navbar.Brand href="/">Alarm Manager</Navbar.Brand>
+                <Nav className="me-auto">
+                    <Nav.Link href="/">Home</Nav.Link>
+                    <Nav.Link href="/features">Features</Nav.Link>
+                    <Nav.Link href="/pricing">Pricing</Nav.Link>
+                </Nav>
+                {userEmail ? (
+                    <Navbar.Text>
+                        Signed in as: <a href="/login">{userEmail}</a>
+                    </Navbar.Text>
+                ) : (
+                    <Nav className="user">
+                        <Button href="/sign-in">Sign In</Button>
+                    </Nav>
+                )}
+            </Container>
+        </Navbar>
     );
 }

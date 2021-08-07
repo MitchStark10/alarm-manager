@@ -1,11 +1,10 @@
-import React from 'react';
-import LoginNewUserPage from './pages/LoginNewUserPage';
-import './App.scss';
 import 'bootstrap/dist/css/bootstrap.css';
-import LOGIN_STATES from './utils/LoginStates';
+import React, { useCallback } from 'react';
+import './App.scss';
 import AlarmList from './components/alarms/AlarmList';
-import { useCallback } from 'react';
 import Header from './components/Header';
+import LoginNewUserPage from './pages/LoginNewUserPage';
+import LOGIN_STATES from './utils/LoginStates';
 
 function App() {
     const [email, setEmail] = React.useState<string | null>(null);
@@ -45,18 +44,19 @@ function App() {
         return null;
     }
 
-    const mainContent = loginState === LOGIN_STATES.LOGGED_IN ? (
-        <AlarmList email={email!} />
-    ) : (
-        <LoginNewUserPage
-            setLoginState={setLoginState}
-            storeLoginInfo={storeLoginInfo}
-        />
-    );
+    const mainContent =
+        loginState === LOGIN_STATES.LOGGED_IN ? (
+            <AlarmList email={email!} />
+        ) : (
+            <LoginNewUserPage
+                setLoginState={setLoginState}
+                storeLoginInfo={storeLoginInfo}
+            />
+        );
 
     return (
         <>
-            <Header />
+            <Header userEmail={email} />
             {mainContent}
         </>
     );
