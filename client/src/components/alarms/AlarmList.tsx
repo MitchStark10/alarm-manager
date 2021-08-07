@@ -46,23 +46,23 @@ export default function AlarmList({ email }: AlarmListProps) {
 
     return (
         <>
-            {error && <p className="error-text">{error.toString()}</p>}
-            {alarmList.length ? (
-                <div className="d-flex flex-column justify-content-center align-items-center">
-                    <h3 className="border-bottom border-dark px-5 mb-3">
-                        Alarms found
-                    </h3>
-                    {alarmList.map((alarmData) => (
+            <div className="d-flex flex-column justify-content-center align-items-center">
+                <h3 className="border-bottom border-dark px-5 mb-3">
+                    Alarms found
+                </h3>
+                {error && <p className="error-text">{error.toString()}</p>}
+                {alarmList.length ? (
+                    alarmList.map((alarmData) => (
                         <AlarmCard
                             refreshAlarmList={forceAlarmListRefresh}
                             data={alarmData}
                             key={alarmData.ID}
                         />
-                    ))}
-                </div>
-            ) : (
-                <p>No alarms found</p>
-            )}
+                    ))
+                ) : (
+                    <p>No alarms found</p>
+                )}
+            </div>
         </>
     );
 }
