@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import LOGIN_STATES from './utils/LoginStates';
 import AlarmList from './components/alarms/AlarmList';
 import { useCallback } from 'react';
+import Header from './components/Header';
 
 function App() {
     const [email, setEmail] = React.useState<string | null>(null);
@@ -44,13 +45,20 @@ function App() {
         return null;
     }
 
-    return loginState === LOGIN_STATES.LOGGED_IN ? (
+    const mainContent = loginState === LOGIN_STATES.LOGGED_IN ? (
         <AlarmList email={email!} />
     ) : (
         <LoginNewUserPage
             setLoginState={setLoginState}
             storeLoginInfo={storeLoginInfo}
         />
+    );
+
+    return (
+        <>
+            <Header />
+            {mainContent}
+        </>
     );
 }
 
