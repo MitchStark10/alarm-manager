@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Container, Nav, Navbar } from 'react-bootstrap';
+import { Button, Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 
 interface HeaderProps {
     userEmail?: string | null;
@@ -18,9 +18,14 @@ export default function Header({ userEmail }: HeaderProps) {
                         <Nav.Link href="/pricing">Pricing</Nav.Link>
                     </Nav>
                     {userEmail ? (
-                        <Navbar.Text>
-                            Signed in as: <a href="/login">{userEmail}</a>
-                        </Navbar.Text>
+                        <NavDropdown
+                            title={'Signed in as: ' + userEmail}
+                            id="sign-out"
+                        >
+                            <NavDropdown.Item href="/sign-out">
+                                Sign Out
+                            </NavDropdown.Item>
+                        </NavDropdown>
                     ) : (
                         <Nav className="user">
                             <Button href="/login">Sign In</Button>

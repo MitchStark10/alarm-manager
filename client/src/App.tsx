@@ -59,7 +59,7 @@ function App() {
                         />
                     </Route>
                     <Route path="/sign-out">
-                        <SignOut setEmail={setEmail} />
+                        <SignOut setEmail={storeLoginInfo} />
                     </Route>
                     <Route path="/">
                         <AlarmList email={email} />
