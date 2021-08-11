@@ -6,6 +6,7 @@ import './App.scss';
 import AlarmList from './components/alarms/AlarmList';
 import Header from './components/Header';
 import SignOut from './components/user/SignOut';
+import Features from './pages/Features';
 import LoginNewUserPage from './pages/LoginNewUserPage';
 import LOGIN_STATES from './utils/LoginStates';
 
@@ -60,6 +61,9 @@ function App() {
                     </Route>
                     <Route path="/sign-out">
                         <SignOut setEmail={storeLoginInfo} />
+                    </Route>
+                    <Route path="/features">
+                        <Features />
                     </Route>
                     <Route path="/">
                         <AlarmList email={email} />
