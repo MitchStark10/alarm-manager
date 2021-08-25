@@ -9,6 +9,7 @@ import SignOut from './components/user/SignOut';
 import Features from './pages/Features';
 import Installation from './pages/Installation';
 import LoginNewUserPage from './pages/LoginNewUserPage';
+import Pricing from './pages/Pricing';
 import LOGIN_STATES from './utils/LoginStates';
 
 function App() {
@@ -68,6 +69,9 @@ function App() {
                     </Route>
                     <Route path="/installation">
                         <Installation />
+                    </Route>
+                    <Route path="/pricing">
+                        <Pricing />
                     </Route>
                     <Route path="/">
                         <AlarmList email={email} />
