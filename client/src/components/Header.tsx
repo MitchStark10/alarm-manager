@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 
 interface HeaderProps {
