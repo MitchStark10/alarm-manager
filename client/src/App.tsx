@@ -11,6 +11,7 @@ import Installation from './pages/Installation';
 import LoginNewUserPage from './pages/LoginNewUserPage';
 import Pricing from './pages/Pricing';
 import LOGIN_STATES from './utils/LoginStates';
+import Documentation from './pages/Documentation';
 
 function App() {
     const [email, setEmail] = React.useState<string | null>(null);
@@ -72,6 +73,9 @@ function App() {
                     </Route>
                     <Route path="/pricing">
                         <Pricing />
+                    </Route>
+                    <Route path="/documentation">
+                        <Documentation />
                     </Route>
                     <Route path="/">
                         <AlarmList email={email} />
