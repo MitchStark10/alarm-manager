@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function Installation() {
-    return <h1>Installation Instructions Coming Soon</h1>;
+    return <h1>Installation Instructions</h1>;
 }
