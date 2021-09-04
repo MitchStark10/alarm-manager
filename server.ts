@@ -2,7 +2,8 @@ import express from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-import bodyParser from 'body-parser';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './swagger.json';
 
 // ENV variables must be initialized before the API/QueryRunner initializes
 dotenv.config({path: __dirname + '/.env'});
@@ -16,6 +17,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 app.use('/api', api);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Serve from specified port
 app.listen( port, () => {
