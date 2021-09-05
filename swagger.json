@@ -25,24 +25,16 @@
             }
         }
     ],
-    "schemes": [
-        "https"
-    ],
+    "schemes": ["http", "https"],
     "paths": {
         "/authenticated/alarm/addAlarm": {
             "post": {
-                "tags": [
-                    "alarm"
-                ],
+                "tags": ["alarm"],
                 "summary": "Adds a new alarm",
                 "description": "Adds a new alarm",
                 "operationId": "addAlarm",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
                 "parameters": [
                     {
                         "in": "body",
@@ -60,19 +52,20 @@
                     }
                 }
             }
-        }  },
-        "definitions": {
-            "Alarm": {
-                "type": "object",
-                "properties": {
-                    "email": {"type": "string"},
-                    "apiKey": {"type": "string"},
-                    "alarmText": {"type": "string"}
-                }
-            }
-        },
-        "externalDocs": {
-            "description": "Find out more about Swagger",
-            "url": "http://swagger.io"
         }
+    },
+    "definitions": {
+        "Alarm": {
+            "type": "object",
+            "properties": {
+                "email": { "type": "string" },
+                "apiKey": { "type": "string" },
+                "alarmText": { "type": "string" }
+            }
+        }
+    },
+    "externalDocs": {
+        "description": "Find out more about Swagger",
+        "url": "http://swagger.io"
+    }
 }
