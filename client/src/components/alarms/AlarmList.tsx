@@ -15,11 +15,6 @@ export default function AlarmList({ email }: AlarmListProps) {
     const [toggleToRefreshList, forceAlarmListRefresh] = useToggle();
     const history = useHistory();
 
-    if (!email) {
-        history.push('/login');
-        return null;
-    }
-
     useEffect(() => {
         const fetchData = {
             email,
@@ -47,6 +42,11 @@ export default function AlarmList({ email }: AlarmListProps) {
             .finally(() => setIsLoading(false));
     }, [email, toggleToRefreshList]);
 
+    if (!email) {
+        history.push('/login');
+        return null;
+    }
+
     if (isLoading) {
         return <p>Loading...</p>;
     }
@@ -54,17 +54,11 @@ export default function AlarmList({ email }: AlarmListProps) {
     return (
         <>
             <div className="d-flex flex-column justify-content-center align-items-center">
-                <h3 className="border-bottom border-dark px-5 mb-3">
-                    Alarms found
-                </h3>
+                <h3 className="border-bottom border-dark px-5 mb-3">Alarms found</h3>
                 {error && <p className="error-text">{error.toString()}</p>}
                 {alarmList.length ? (
                     alarmList.map((alarmData) => (
-                        <AlarmCard
-                            refreshAlarmList={forceAlarmListRefresh}
-                            data={alarmData}
-                            key={alarmData.ID}
-                        />
+                        <AlarmCard refreshAlarmList={forceAlarmListRefresh} data={alarmData} key={alarmData.ID} />
                     ))
                 ) : (
                     <p>No alarms found</p>
