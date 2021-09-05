@@ -1,0 +1,6 @@
+.husky/
+.eslintignore
+.eslintrc.json
+.prettierignore
+.prettierrc
+LICENSE
