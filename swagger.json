@@ -52,6 +52,32 @@
                     }
                 }
             }
+        },
+        "/authenticated/alarm/retrieveAlarms": {
+            "post": {
+                "tags": ["alarm"],
+                "summary": "Alarm Retrieval",
+                "description": "Retrieves all alarms associated with a given account",
+                "operationId": "retrieveAlarms",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Alarm object that needs to be added to the storiage",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Email"
+                        }
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -61,6 +87,13 @@
                 "email": { "type": "string" },
                 "apiKey": { "type": "string" },
                 "alarmText": { "type": "string" }
+            }
+        },
+        "Email": {
+            "type": "object",
+            "properties": {
+                "email": { "type": "string" },
+                "apiKey": { "type": "string" }
             }
         }
     },

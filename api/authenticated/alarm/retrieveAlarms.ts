@@ -11,7 +11,7 @@ WHERE Email = ?
 `;
 
 app.post('', async (req, res) => {
-    const {email} = req.body;
+    const { email } = req.body;
     const retrieveAlarmsQuery = mysql.format(RETRIEVE_ALRAMS_SQL, [email]);
     const retrieveAlarmsResponse = await queryRunner.runQueryWithErrorHandling(retrieveAlarmsQuery);
     res.status(retrieveAlarmsResponse.success ? 200 : 500).json(retrieveAlarmsResponse);

@@ -1,6 +1,6 @@
 import express from 'express';
-import QueryRunner from '../../../services/QueryRunner';
 import mysql from 'mysql';
+import QueryRunner from '../../../services/QueryRunner';
 const app = express();
 
 const DELETE_ALARM_BY_ID_SQL = `
