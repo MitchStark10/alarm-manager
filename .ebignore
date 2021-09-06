@@ -8,3 +8,4 @@ LICENSE
 .gitignore
 node_modules/
 client/node_modules/
+dist/
