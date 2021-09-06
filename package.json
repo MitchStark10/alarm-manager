@@ -4,7 +4,8 @@
   "description": "Log manager to aggregate logs across servers in a single spot.",
   "main": "dist/server.js",
   "scripts": {
-    "build": "tsc && cp .env ./dist/.env && cd client && npm install && npm run build",
+    "copyEnv": "cp .env ./dist/.env",
+    "build": "tsc && cd client && npm install && npm run build",
     "prestart": "npm run build",
     "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1",
