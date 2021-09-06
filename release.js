@@ -2,7 +2,7 @@ const prompt = require('prompt-sync')({sigint: true});
 const fs = require('fs');
 const exec = require('child_process').exec;
 
-exec('git branch', function(gitBrError, gitBrStdOut) {
+exec('git branch', function(_gitBrError, gitBrStdOut) {
     let deployTarget;
 
     if (gitBrStdOut.includes('* main')) {
@@ -59,16 +59,16 @@ exec('git branch', function(gitBrError, gitBrStdOut) {
         }
         exec('git tag "' + releaseTag + '"', () => {
             console.log('About to push the tag to github');
-            exec('git add .; git commit -m "release' + releaseTag + '" --no-verify; git push --no-verify; git push --tags', (gitUpdateErr, gitUpdateStdOut) => {
+            exec('git add .; git commit -m "release' + releaseTag + '" --no-verify; git push --no-verify; git push --tags', (_gitUpdateErr, gitUpdateStdOut) => {
                 console.log(gitUpdateStdOut);
                 console.log('About to run \'eb deploy\', this may take several minutes...');
-                exec('eb deploy', (deployError, deployStdOut) => {
+                exec('eb deploy', (_deployError, deployStdOut) => {
                     console.log(deployStdOut);
                     console.log('Completed deploy');
 
                     if (deployTarget === 'prod') {
                         console.log('Merging main back into develop');
-                        exec('git checkout develop; git merge main; git push;', (error, stdout) => {
+                        exec('git checkout develop; git merge main; git push;', (_error, stdout) => {
                             console.log(stdout);
                             console.log('develop is synced with main');
                         });
