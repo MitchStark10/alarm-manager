@@ -6,3 +6,5 @@
 LICENSE
 .git/
 .gitignore
+node_modules/
+client/node_modules/
