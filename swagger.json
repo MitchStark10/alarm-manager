@@ -1,9 +1,9 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "Documentation for the Alarm Manager project.",
+        "description": "Documentation for the CASM project.",
         "version": "1.0.0",
-        "title": "Swagger Alarm Manager",
+        "title": "Swagger CASM",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "email": "mitchstark10@gmail.com"

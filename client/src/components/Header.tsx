@@ -8,7 +8,7 @@ export default function Header({ userEmail }: HeaderProps) {
     return (
         <Navbar bg="dark" variant="dark" expand="md">
             <Container>
-                <Navbar.Brand href="/">Alarm Manager</Navbar.Brand>
+                <Navbar.Brand href="/">CASM</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse>
                     <Nav className="me-auto">
