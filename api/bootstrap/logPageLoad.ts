@@ -14,8 +14,8 @@ VALUES (?, ?, NOW())
 app.post('', async (req, res) => {
     const emailToAddTheLogTo = process.env.BOOTSTRAP_EMAIL;
     const query = mysql.format(ADD_NEW_ACCOUNT_SQL, [emailToAddTheLogTo, req.body.logText]);
-    const response = await QueryRunner.runQuery(query);
-    res.status(response.success).json(response);
+    const response = await QueryRunner.runQueryWithErrorHandling(query);
+    res.status(response.success ? 200 : 500).json(response);
 });
 
 export default app;
