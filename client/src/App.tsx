@@ -6,12 +6,12 @@ import './App.scss';
 import AlarmList from './components/alarms/AlarmList';
 import Header from './components/Header';
 import SignOut from './components/user/SignOut';
+import Documentation from './pages/Documentation';
 import Features from './pages/Features';
 import Installation from './pages/Installation';
 import LoginNewUserPage from './pages/LoginNewUserPage';
 import Pricing from './pages/Pricing';
 import LOGIN_STATES from './utils/LoginStates';
-import Documentation from './pages/Documentation';
 
 function App() {
     const [email, setEmail] = React.useState<string | null>(null);
@@ -45,6 +45,17 @@ function App() {
                 storeLoginInfo('');
                 setLoginState(LOGIN_STATES.UNAUTHENTICATED);
             });
+
+        // TODO: Application load log
+        fetch('/api/bootstrap/logPageLoad', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                logText: 'Visit occurred at: ' + window.location.pathname,
+            }),
+        });
     }, []);
 
     if (loginState === LOGIN_STATES.LOADING) {
@@ -57,10 +68,7 @@ function App() {
             <BrowserRouter>
                 <Switch>
                     <Route path="/login">
-                        <LoginNewUserPage
-                            setLoginState={setLoginState}
-                            storeLoginInfo={storeLoginInfo}
-                        />
+                        <LoginNewUserPage setLoginState={setLoginState} storeLoginInfo={storeLoginInfo} />
                     </Route>
                     <Route path="/sign-out">
                         <SignOut setEmail={storeLoginInfo} />
