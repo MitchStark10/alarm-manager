@@ -8,6 +8,7 @@ export default function Usage() {
                 <a href="https://github.com/MitchStark10/alarm-manager-node-client">here</a>. More pre-built clients may
                 come soon, but if you see a new for specific language support, feel free to submit a PR in the{' '}
                 <a href="https://github.com/MitchStark10/alarm-manager/issues">GitHub repo</a>.
+                <p>TODO: Document The example usage of NPM module</p>
             </p>
             <h2>API Documentation</h2>
             <p>

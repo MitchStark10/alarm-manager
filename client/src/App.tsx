@@ -8,7 +8,6 @@ import Header from './components/Header';
 import SignOut from './components/user/SignOut';
 import Documentation from './pages/Documentation';
 import Features from './pages/Features';
-import Installation from './pages/Installation';
 import LoginNewUserPage from './pages/LoginNewUserPage';
 import Pricing from './pages/Pricing';
 import LOGIN_STATES from './utils/LoginStates';
@@ -75,9 +74,6 @@ function App() {
                     </Route>
                     <Route path="/features">
                         <Features />
-                    </Route>
-                    <Route path="/installation">
-                        <Installation />
                     </Route>
                     <Route path="/pricing">
                         <Pricing />
