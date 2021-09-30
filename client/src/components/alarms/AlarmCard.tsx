@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { AlarmData } from './AlarmTypes';
@@ -33,7 +33,7 @@ export default function AlarmCard({ data, refreshAlarmList }: AlarmCardProps) {
     return (
         <Card style={{ width: '18rem', marginBottom: '10px' }}>
             <Card.Body>
-                <Card.Title>{data.AlarmText}</Card.Title>
+                <Card.Title>{data.AlarmTitle}</Card.Title>
                 <Card.Text>{data.AlarmDateTime}</Card.Text>
                 {deleteError && <p className="error-text">{deleteError}</p>}
                 <Button variant="primary" onClick={handleDeleteAlarm}>

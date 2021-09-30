@@ -1,7 +1,8 @@
 CREATE TABLE Alarm(
 	ID INT PRIMARY KEY AUTO_INCREMENT,
 	Email VARCHAR(50),
-	AlarmText TEXT,
+	AlarmTitle TEXT,
+    AlarmDetails TEXT,
 	AlarmDateTime DATETIME,
 	FOREIGN KEY (Email) REFERENCES Account(Email) ON DELETE CASCADE
 );

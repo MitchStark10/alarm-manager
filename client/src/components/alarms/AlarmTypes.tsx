@@ -1,6 +1,6 @@
 export interface AlarmData {
     ID: number;
     Email: string;
-    AlarmText: string;
+    AlarmTitle: string;
     AlarmDateTime: string;
 }
