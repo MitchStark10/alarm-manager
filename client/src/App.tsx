@@ -52,7 +52,8 @@ function App() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                logText: 'Visit occurred at: ' + window.location.pathname,
+                alarmTitle: 'Visit Occurred',
+                alarmDetails: 'URL: ' + window.location.pathname,
             }),
         });
     }, []);

@@ -35,6 +35,7 @@ export default function AlarmCard({ data, refreshAlarmList }: AlarmCardProps) {
             <Card.Body>
                 <Card.Title>{data.AlarmTitle}</Card.Title>
                 <Card.Text>{data.AlarmDateTime}</Card.Text>
+                <Card.Text>{data.AlarmDetails}</Card.Text>
                 {deleteError && <p className="error-text">{deleteError}</p>}
                 <Button variant="primary" onClick={handleDeleteAlarm}>
                     Delete Alarm

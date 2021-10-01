@@ -3,4 +3,5 @@ export interface AlarmData {
     Email: string;
     AlarmTitle: string;
     AlarmDateTime: string;
+    AlarmDetails?: string;
 }
