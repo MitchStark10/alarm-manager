@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import useToggle from '../../hooks/useToggle';
 import AlarmCard from './AlarmCard';
+import { AlarmListCard } from './AlarmListCard';
 import { AlarmData } from './AlarmTypes';
 
 interface AlarmListProps {
@@ -73,16 +74,21 @@ export default function AlarmList({ email }: AlarmListProps) {
             <div className="d-flex flex-column justify-content-center align-items-center">
                 <h3 className="border-bottom border-dark px-5 mb-3">Alarms found</h3>
                 {error && <p className="error-text">{error.toString()}</p>}
-                {Object.entries(alarmListGroupedByTitle).map((keyValuePair, index) => (
-                    <p key={index}>{keyValuePair.toString()}</p>
-                ))}
-                {alarmList.length ? (
-                    alarmList.map((alarmData) => (
-                        <AlarmCard refreshAlarmList={forceAlarmListRefresh} data={alarmData} key={alarmData.ID} />
-                    ))
-                ) : (
-                    <p>No alarms found</p>
-                )}
+                {Object.entries(alarmListGroupedByTitle).map((keyValuePair, index) => {
+                    const groupedAlarms = keyValuePair[1];
+
+                    if (groupedAlarms.length > 1) {
+                        return <AlarmListCard key={index} alarms={groupedAlarms} />;
+                    }
+
+                    return (
+                        <AlarmCard
+                            key={index}
+                            refreshAlarmList={forceAlarmListRefresh}
+                            data={groupedAlarms[0]}
+                        />
+                    );
+                })}
             </div>
         </>
     );
