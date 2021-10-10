@@ -9,13 +9,17 @@ interface AlarmListCardProps {
     alarms: AlarmData[];
 }
 
-export const AlarmListCard = ({ alarms }: AlarmListCardProps) => {
+export const AlarmListCard: React.FC<AlarmListCardProps> = ({ alarms }: AlarmListCardProps) => {
     const [seeIndividualCards, setSeeIndividualCards] = useState(false);
 
     if (seeIndividualCards) {
-        return alarms.map((alarmData, index) => {
-            <AlarmCard key={index} data={alarmData} refreshAlarmList={() => {}}/>;
-        });
+        return (
+            <>
+                {alarms.map((alarmData, index) =>
+                    <AlarmCard key={index} data={alarmData} refreshAlarmList={() => {}}/>,
+                )}
+            </>
+        );
     }
 
     return (
