@@ -10,8 +10,6 @@ const ADD_ASSIGNEE_SQL = `
  `;
 
 app.put('', async (req, res) => {
-    console.log(req);
-
     const { assigneeId, accountEmail } = req.body;
 
     const addAssigneeQuery = mysql.format(ADD_ASSIGNEE_SQL, [assigneeId, accountEmail]);
