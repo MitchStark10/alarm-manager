@@ -78,16 +78,16 @@ export default function AlarmList({ email }: AlarmListProps) {
                     const groupedAlarms = keyValuePair[1];
 
                     if (groupedAlarms.length > 1) {
-                        return <AlarmListCard key={index} alarms={groupedAlarms} />;
+                        return (
+                            <AlarmListCard
+                                key={index}
+                                alarms={groupedAlarms}
+                                refreshAlarmList={forceAlarmListRefresh}
+                            />
+                        );
                     }
 
-                    return (
-                        <AlarmCard
-                            key={index}
-                            refreshAlarmList={forceAlarmListRefresh}
-                            data={groupedAlarms[0]}
-                        />
-                    );
+                    return <AlarmCard key={index} refreshAlarmList={forceAlarmListRefresh} data={groupedAlarms[0]} />;
                 })}
             </div>
         </>
