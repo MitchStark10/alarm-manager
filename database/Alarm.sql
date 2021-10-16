@@ -5,6 +5,6 @@ CREATE TABLE Alarm(
     AssigneeID VARCHAR(50),
     AlarmDetails TEXT,
 	AlarmDateTime DATETIME,
-    FOREIGN KEY (Email) REFERENCES Assignee(AssigneeID),
+    FOREIGN KEY (AssigneeID) REFERENCES Assignee(AssigneeID),
 	FOREIGN KEY (Email) REFERENCES Account(Email) ON DELETE CASCADE
 );

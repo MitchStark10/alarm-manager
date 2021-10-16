@@ -1,0 +1,4 @@
+ALTER TABLE Alarm
+ADD AssigneeID VARCHAR(50);
+
+ALTER TABLE Alarm ADD CONSTRAINT fk_assignee_id FOREIGN KEY (AssigneeID) REFERENCES Assignee(AssigneeID);
