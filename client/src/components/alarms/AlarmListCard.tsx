@@ -7,10 +7,11 @@ import { AlarmData } from './AlarmTypes';
 
 interface AlarmListCardProps {
     alarms: AlarmData[];
+    email: string;
     refreshAlarmList: () => void
 }
 
-export const AlarmListCard = ({ alarms, refreshAlarmList }: AlarmListCardProps) => {
+export const AlarmListCard = ({ alarms, refreshAlarmList, email }: AlarmListCardProps) => {
     const [seeIndividualCards, setSeeIndividualCards] = useState(false);
     const [pendingDelete, setPendingDelete] = useState(false);
 
@@ -43,7 +44,7 @@ export const AlarmListCard = ({ alarms, refreshAlarmList }: AlarmListCardProps) 
         return (
             <>
                 {alarms.map((alarmData, index) =>
-                    <AlarmCard key={index} data={alarmData} refreshAlarmList={refreshAlarmList}/>,
+                    <AlarmCard key={index} data={alarmData} refreshAlarmList={refreshAlarmList} email={email}/>,
                 )}
             </>
         );

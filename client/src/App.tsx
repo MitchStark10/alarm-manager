@@ -45,7 +45,12 @@ function App() {
                 setLoginState(LOGIN_STATES.UNAUTHENTICATED);
             });
 
-        // TODO: Application load log
+        fetch('/api/authenticated/getAssigneeList').then((response) => response.json()).then((data) => {
+
+        }).catch((error) => {
+            console.error('Error retrieving assignee list', error);
+        });
+
         fetch('/api/bootstrap/logPageLoad', {
             method: 'POST',
             headers: {

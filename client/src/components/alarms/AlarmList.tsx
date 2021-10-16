@@ -5,7 +5,7 @@ import AlarmCard from './AlarmCard';
 import { AlarmListCard } from './AlarmListCard';
 import { AlarmData } from './AlarmTypes';
 
-interface AlarmListProps {
+export interface AlarmListProps {
     email?: string | null;
 }
 
@@ -83,11 +83,19 @@ export default function AlarmList({ email }: AlarmListProps) {
                                 key={index}
                                 alarms={groupedAlarms}
                                 refreshAlarmList={forceAlarmListRefresh}
+                                email={email}
                             />
                         );
                     }
 
-                    return <AlarmCard key={index} refreshAlarmList={forceAlarmListRefresh} data={groupedAlarms[0]} />;
+                    return (
+                        <AlarmCard
+                            key={index}
+                            refreshAlarmList={forceAlarmListRefresh}
+                            data={groupedAlarms[0]}
+                            email={email}
+                        />
+                    );
                 })}
             </div>
         </>
