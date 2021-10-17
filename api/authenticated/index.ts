@@ -2,6 +2,7 @@ import express from 'express';
 import addAlarm from './alarm/addAlarm';
 import retrieveAlarms from './alarm/retrieveAlarms';
 import assignAlarm from './alarm/assignAlarm';
+import getAssignees from './assignees/getAssignees';
 import AuthUtils from '../../services/AuthUtils';
 import CookieManager from '../../services/CookieManager';
 import deleteAlarm from './alarm/deleteAlarm';
@@ -26,5 +27,6 @@ app.use('/alarm/addAlarm', addAlarm);
 app.use('/alarm/retrieveAlarms', retrieveAlarms);
 app.use('/alarm/deleteAlarm', deleteAlarm);
 app.use('/alarm/assignAlarm', assignAlarm);
+app.use('/assignees/getAssignees', getAssignees);
 
 export default app;

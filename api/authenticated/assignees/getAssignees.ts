@@ -8,12 +8,10 @@ SELECT AssigneeID FROM Assignee
 WHERE AccountEmail = ?
 `;
 
-app.get('', async (req, res) => {
+app.post('', async (req, res) => {
     const { email } = req.body;
-
     const getAssigneesQuery = mysql.format(GET_ASSGINEES_SQL, [email]);
     const getAssigneesResponse = await QueryRunner.runQueryWithErrorHandling(getAssigneesQuery);
-
     res.status(getAssigneesResponse.success ? 200 : 500).json(getAssigneesResponse);
 });
 

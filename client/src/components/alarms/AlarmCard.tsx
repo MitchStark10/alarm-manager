@@ -3,19 +3,20 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import useInputState from '../../hooks/useInputState';
 import useToggle from '../../hooks/useToggle';
+import {useAssigneeOptionsStore} from '../../stores/useAssigneeOptionsStore';
 import { AlarmData } from './AlarmTypes';
 
 interface AlarmCardProps {
     data: AlarmData;
     email: string;
-    assigneeOptions?: string[];
     refreshAlarmList: () => void;
 }
 
-export default function AlarmCard({ data, refreshAlarmList, email, assigneeOptions }: AlarmCardProps) {
+export default function AlarmCard({ data, refreshAlarmList, email }: AlarmCardProps) {
     const [error, setError] = useState('');
     const [isAssigningCard, toggleIsAssigningCard] = useToggle(false);
     const [assignee, , setAssignee] = useInputState('');
+    const assigneeOptions = useAssigneeOptionsStore((state) => state.assigneeOptions);
 
     const handleDeleteAlarm = () => {
         fetch('/api/authenticated/alarm/deleteAlarm', {
@@ -66,6 +67,7 @@ export default function AlarmCard({ data, refreshAlarmList, email, assigneeOptio
                 <Card.Title>{data.AlarmTitle}</Card.Title>
                 <datalist id="assignees">
                     {assigneeOptions?.map((option, index) => {
+                        console.log('iterating', option);
                         return <option key={index} value={option}/>;
                     })}
                 </datalist>
@@ -75,6 +77,7 @@ export default function AlarmCard({ data, refreshAlarmList, email, assigneeOptio
                     placeholder="Assignee"
                     value={assignee}
                     onChange={setAssignee}
+                    list="assignees"
                 ></input>
                 <div className="d-flex justify-content-between">
                     <Button variant="primary" onClick={handleAssignAlarm}>
