@@ -4,4 +4,5 @@ export interface AlarmData {
     AlarmTitle: string;
     AlarmDateTime: string;
     AlarmDetails?: string;
+    AssigneeID?: string;
 }

@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Route, Switch } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 import './App.scss';
@@ -10,11 +10,17 @@ import Documentation from './pages/Documentation';
 import Features from './pages/Features';
 import LoginNewUserPage from './pages/LoginNewUserPage';
 import Pricing from './pages/Pricing';
+import {useAssigneeOptionsStore} from './stores/useAssigneeOptionsStore';
 import LOGIN_STATES from './utils/LoginStates';
+
+interface AssigneeOptionApiResponse {
+    AssigneeID: string;
+}
 
 function App() {
     const [email, setEmail] = React.useState<string | null>(null);
     const [loginState, setLoginState] = React.useState(LOGIN_STATES.LOADING);
+    const setAssigneeOptions = useAssigneeOptionsStore((state) => state.setAssigneeOptions);
 
     const storeLoginInfo = useCallback((email: string) => {
         localStorage.setItem('userEmail', email);
@@ -45,7 +51,7 @@ function App() {
                 setLoginState(LOGIN_STATES.UNAUTHENTICATED);
             });
 
-        // TODO: Application load log
+
         fetch('/api/bootstrap/logPageLoad', {
             method: 'POST',
             headers: {
@@ -57,6 +63,23 @@ function App() {
             }),
         });
     }, []);
+
+    useEffect(() => {
+        if (email) {
+            console.log('email', email);
+            fetch('/api/authenticated/assignees/getAssignees', {
+                method: 'POST',
+                body: JSON.stringify({email}),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }).then((response) => response.json()).then((data) => {
+                setAssigneeOptions(data.result.map((option: AssigneeOptionApiResponse) => option.AssigneeID));
+            }).catch((error) => {
+                console.error('Error retrieving assignee list', error);
+            });
+        }
+    }, [email]);
 
     if (loginState === LOGIN_STATES.LOADING) {
         return null;

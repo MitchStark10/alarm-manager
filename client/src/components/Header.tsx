@@ -14,7 +14,6 @@ export default function Header({ userEmail }: HeaderProps) {
                     <Nav className="me-auto">
                         <Nav.Link href="/">Home</Nav.Link>
                         <Nav.Link href="/features">Features</Nav.Link>
-                        <Nav.Link href="/installation">Installation</Nav.Link>
                         <Nav.Link href="/pricing">Pricing</Nav.Link>
                     </Nav>
                     {userEmail ? (
