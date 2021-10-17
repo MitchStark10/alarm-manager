@@ -1,11 +1,9 @@
 import { useHistory } from 'react-router';
+import {useUserStore} from '../../stores/useUserStore';
 
-interface SignOutProps {
-    setEmail: (email: string) => void;
-}
-
-export default function SignOut({ setEmail }: SignOutProps) {
+export default function SignOut() {
     const history = useHistory();
+    const setEmail = useUserStore((state) => state.setEmail);
     setEmail('');
     fetch('/api/public/account/signOut').finally(() => {
         history.push('/login');

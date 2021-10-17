@@ -1,19 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import useToggle from '../../hooks/useToggle';
+import { useUserStore } from '../../stores/useUserStore';
 import AlarmCard from './AlarmCard';
 import { AlarmListCard } from './AlarmListCard';
 import { AlarmData } from './AlarmTypes';
-
-export interface AlarmListProps {
-    email?: string | null;
-}
 
 interface AlarmListGrouped {
     [key: string]: AlarmData[];
 }
 
-export default function AlarmList({ email }: AlarmListProps) {
+export default function AlarmList() {
+    const email = useUserStore((state) => state.email);
     const [alarmList, setAlarmList] = useState<Array<AlarmData>>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');

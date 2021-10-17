@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 import './App.scss';
@@ -10,28 +10,22 @@ import Documentation from './pages/Documentation';
 import Features from './pages/Features';
 import LoginNewUserPage from './pages/LoginNewUserPage';
 import Pricing from './pages/Pricing';
-import {useAssigneeOptionsStore} from './stores/useAssigneeOptionsStore';
-import LOGIN_STATES from './utils/LoginStates';
+import { useAssigneeOptionsStore } from './stores/useAssigneeOptionsStore';
+import { useUserStore } from './stores/useUserStore';
 
 interface AssigneeOptionApiResponse {
     AssigneeID: string;
 }
 
 function App() {
-    const [email, setEmail] = React.useState<string | null>(null);
-    const [loginState, setLoginState] = React.useState(LOGIN_STATES.LOADING);
+    const { loginState, email, setEmail, setLoginState } = useUserStore();
     const setAssigneeOptions = useAssigneeOptionsStore((state) => state.setAssigneeOptions);
 
-    const storeLoginInfo = useCallback((email: string) => {
-        localStorage.setItem('userEmail', email);
-        setEmail(email);
-    }, []);
-
     React.useEffect(() => {
-        const email = localStorage.getItem('userEmail');
+        const localStorageEmail = localStorage.getItem('userEmail');
 
-        if (!email) {
-            setLoginState(LOGIN_STATES.UNAUTHENTICATED);
+        if (!localStorageEmail) {
+            setLoginState('UNAUTHENTICATED');
             return;
         }
 
@@ -39,18 +33,17 @@ function App() {
             .then((response) => response.json())
             .then((data) => {
                 if (data.success) {
-                    setEmail(email);
-                    setLoginState(LOGIN_STATES.LOGGED_IN);
+                    setEmail(localStorageEmail);
+                    setLoginState('LOGGED_IN');
                 } else {
-                    storeLoginInfo('');
-                    setLoginState(LOGIN_STATES.UNAUTHENTICATED);
+                    setEmail('');
+                    setLoginState('UNAUTHENTICATED');
                 }
             })
             .catch(() => {
-                storeLoginInfo('');
-                setLoginState(LOGIN_STATES.UNAUTHENTICATED);
+                setEmail('');
+                setLoginState('UNAUTHENTICATED');
             });
-
 
         fetch('/api/bootstrap/logPageLoad', {
             method: 'POST',
@@ -66,22 +59,24 @@ function App() {
 
     useEffect(() => {
         if (email) {
-            console.log('email', email);
             fetch('/api/authenticated/assignees/getAssignees', {
                 method: 'POST',
-                body: JSON.stringify({email}),
+                body: JSON.stringify({ email }),
                 headers: {
                     'Content-Type': 'application/json',
                 },
-            }).then((response) => response.json()).then((data) => {
-                setAssigneeOptions(data.result.map((option: AssigneeOptionApiResponse) => option.AssigneeID));
-            }).catch((error) => {
-                console.error('Error retrieving assignee list', error);
-            });
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    setAssigneeOptions(data.result.map((option: AssigneeOptionApiResponse) => option.AssigneeID));
+                })
+                .catch((error) => {
+                    console.error('Error retrieving assignee list', error);
+                });
         }
     }, [email]);
 
-    if (loginState === LOGIN_STATES.LOADING) {
+    if (loginState === 'LOADING') {
         return null;
     }
 
@@ -91,10 +86,10 @@ function App() {
             <BrowserRouter>
                 <Switch>
                     <Route path="/login">
-                        <LoginNewUserPage setLoginState={setLoginState} storeLoginInfo={storeLoginInfo} />
+                        <LoginNewUserPage />
                     </Route>
                     <Route path="/sign-out">
-                        <SignOut setEmail={storeLoginInfo} />
+                        <SignOut />
                     </Route>
                     <Route path="/features">
                         <Features />
@@ -106,7 +101,7 @@ function App() {
                         <Documentation />
                     </Route>
                     <Route path="/">
-                        <AlarmList email={email} />
+                        <AlarmList />
                     </Route>
                 </Switch>
             </BrowserRouter>
