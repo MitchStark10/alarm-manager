@@ -13,6 +13,10 @@ import Pricing from './pages/Pricing';
 import {useAssigneeOptionsStore} from './stores/useAssigneeOptionsStore';
 import LOGIN_STATES from './utils/LoginStates';
 
+interface AssigneeOptionApiResponse {
+    AssigneeID: string;
+}
+
 function App() {
     const [email, setEmail] = React.useState<string | null>(null);
     const [loginState, setLoginState] = React.useState(LOGIN_STATES.LOADING);
@@ -70,8 +74,7 @@ function App() {
                     'Content-Type': 'application/json',
                 },
             }).then((response) => response.json()).then((data) => {
-                console.log('data', data);
-                setAssigneeOptions(data.result);
+                setAssigneeOptions(data.result.map((option: AssigneeOptionApiResponse) => option.AssigneeID));
             }).catch((error) => {
                 console.error('Error retrieving assignee list', error);
             });
