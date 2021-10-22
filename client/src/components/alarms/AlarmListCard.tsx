@@ -1,5 +1,5 @@
 // This component is intended to be used as a representation for multiple alarms with the same title
-import {useState} from 'react';
+import { useState } from 'react';
 import { Card } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import AlarmCard from './AlarmCard';
@@ -8,8 +8,23 @@ import { AlarmData } from './AlarmTypes';
 interface AlarmListCardProps {
     alarms: AlarmData[];
     email: string;
-    refreshAlarmList: () => void
+    refreshAlarmList: () => void;
 }
+
+const alarmDateTimeComparator = (a: AlarmData, b: AlarmData): number => {
+    const aDate = new Date(a.AlarmDateTime);
+    const bDate = new Date(b.AlarmDateTime);
+    console.log('a time', aDate);
+    console.log('b time', bDate);
+
+    if (aDate > bDate) {
+        return -1;
+    } else if (aDate < bDate) {
+        return 1;
+    }
+
+    return 0;
+};
 
 export const AlarmListCard = ({ alarms, refreshAlarmList, email }: AlarmListCardProps) => {
     const [seeIndividualCards, setSeeIndividualCards] = useState(false);
@@ -22,16 +37,18 @@ export const AlarmListCard = ({ alarms, refreshAlarmList, email }: AlarmListCard
         const deleteRequestPromises: Promise<any>[] = [];
 
         alarms.forEach((alarm) => {
-            deleteRequestPromises.push(fetch('/api/authenticated/alarm/deleteAlarm', {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email: alarm.Email,
-                    id: alarm.ID,
+            deleteRequestPromises.push(
+                fetch('/api/authenticated/alarm/deleteAlarm', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: alarm.Email,
+                        id: alarm.ID,
+                    }),
                 }),
-            }));
+            );
         });
 
         Promise.allSettled(deleteRequestPromises).then(() => {
@@ -43,18 +60,21 @@ export const AlarmListCard = ({ alarms, refreshAlarmList, email }: AlarmListCard
     if (seeIndividualCards) {
         return (
             <>
-                {alarms.map((alarmData, index) =>
-                    <AlarmCard key={index} data={alarmData} refreshAlarmList={refreshAlarmList} email={email}/>,
-                )}
+                {alarms.map((alarmData, index) => (
+                    <AlarmCard key={index} data={alarmData} refreshAlarmList={refreshAlarmList} email={email} />
+                ))}
             </>
         );
     }
+
+    const sortedAlarms = alarms.sort(alarmDateTimeComparator);
+    const latestAlarmTime: AlarmData | null = sortedAlarms?.[0];
 
     return (
         <Card style={{ width: '18rem', marginBottom: '10px' }}>
             <Card.Body>
                 <Card.Title>{alarms[0]?.AlarmTitle}</Card.Title>
-                <Card.Text>Latest Alarm: TBD</Card.Text>
+                <Card.Text>Latest Alarm: {new Date(latestAlarmTime.AlarmDateTime).toLocaleString()}</Card.Text>
                 <Card.Text>Number of Triggered Alarms: {alarms.length}</Card.Text>
                 <Button variant="primary" className="w-100" onClick={() => setSeeIndividualCards(true)}>
                     See Individual Alarms
