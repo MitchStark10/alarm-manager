@@ -8,8 +8,8 @@ This project is not trying to replace something like Splunk. Rather, it is meant
 * Once cloned, run `npm install` at the base directory of the project.
 
 ## Persistent data storage
-* CASM utilizes a MySQL intance for data storage. You can use any hosting provider with MySQL support for your data storage.
-* Once you have setup your MySQL instance, CASM requires the following environment variables to be set in order to store account information, alarms, etc.  
+* chasm utilizes a MySQL intance for data storage. You can use any hosting provider with MySQL support for your data storage.
+* Once you have setup your MySQL instance, chasm requires the following environment variables to be set in order to store account information, alarms, etc.  
 ```
 MYSQL_HOST
 MySQL_USER

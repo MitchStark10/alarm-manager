@@ -8,7 +8,7 @@ export default function Header({ userEmail }: HeaderProps) {
     return (
         <Navbar bg="dark" variant="dark" expand="md">
             <Container>
-                <Navbar.Brand href="/">CASM</Navbar.Brand>
+                <Navbar.Brand href="/">chasm</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse>
                     <Nav className="me-auto">
@@ -17,13 +17,8 @@ export default function Header({ userEmail }: HeaderProps) {
                         <Nav.Link href="/pricing">Pricing</Nav.Link>
                     </Nav>
                     {userEmail ? (
-                        <NavDropdown
-                            title={'Signed in as: ' + userEmail}
-                            id="sign-out"
-                        >
-                            <NavDropdown.Item href="/sign-out">
-                                Sign Out
-                            </NavDropdown.Item>
+                        <NavDropdown title={'Signed in as: ' + userEmail} id="sign-out">
+                            <NavDropdown.Item href="/sign-out">Sign Out</NavDropdown.Item>
                         </NavDropdown>
                     ) : (
                         <Nav className="user">
