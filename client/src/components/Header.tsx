@@ -8,7 +8,9 @@ export default function Header({ userEmail }: HeaderProps) {
     return (
         <Navbar bg="dark" variant="dark" expand="md">
             <Container>
-                <Navbar.Brand href="/">chasm</Navbar.Brand>
+                <Navbar.Brand href="/">
+                    <img className="header-logo" src="/chasm_color_nobg.svg"></img>
+                </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse>
                     <Nav className="me-auto">
