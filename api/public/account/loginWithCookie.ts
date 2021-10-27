@@ -33,6 +33,7 @@ app.get('', async (req, res) => {
 
     if (!isUserAuthenticated) {
         CookieManager.unsetCookie(res);
+        retrieveUserResponse.success = false;
     }
 
     res.status(isUserAuthenticated ? 200 : 403).json(retrieveUserResponse);

@@ -14,8 +14,6 @@ interface AlarmListCardProps {
 const alarmDateTimeComparator = (a: AlarmData, b: AlarmData): number => {
     const aDate = new Date(a.AlarmDateTime);
     const bDate = new Date(b.AlarmDateTime);
-    console.log('a time', aDate);
-    console.log('b time', bDate);
 
     if (aDate > bDate) {
         return -1;
