@@ -20,4 +20,4 @@ EXPOSE 8080
 EXPOSE 3000
 
 # Command that runs the application 
-CMD [ "npm", "run dev"  ]
+CMD [ "npm",  "run", "dev" ]
