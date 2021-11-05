@@ -13,7 +13,7 @@ RUN npm install
 # RUN npm ci --only=production
 
 # Copy application source code
-COPY . .
+ADD . .
 
 # Expose Docker VM ports
 EXPOSE 8080
