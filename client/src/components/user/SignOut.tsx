@@ -9,7 +9,7 @@ export default function SignOut() {
     useEffect(() => {
         setTimeout(() => {
             fetch('/api/public/account/signOut').finally(() => {
-                history.push('/');
+                history.push('/login');
                 setEmail('');
             });
         }, 0);

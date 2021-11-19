@@ -19,6 +19,7 @@ export default function AlarmList() {
     const history = useHistory();
 
     useEffect(() => {
+        let isMounted = true;
         const fetchData = {
             email,
         };
@@ -32,17 +33,23 @@ export default function AlarmList() {
             .then((data) => data.json())
             .then((response) => {
                 if (response.success) {
-                    setAlarmList(response.result);
+                    isMounted && setAlarmList(response.result);
                 } else {
                     console.error(response);
-                    setError(response.message || response);
+                    isMounted && setError(response.message || response);
                 }
             })
             .catch((error) => {
                 console.error(error);
-                setError(error.toString());
+                isMounted && setError(error.toString());
             })
-            .finally(() => setIsLoading(false));
+            .finally(() => {
+                isMounted && setIsLoading(false);
+            });
+
+        return () => {
+            isMounted = false;
+        };
     }, [email, toggleToRefreshList]);
 
     if (!email) {
