@@ -26,7 +26,7 @@ app.post('', async (req, res) => {
 
         const mailOptions = {
             from: process.env.EMAIL_USER,
-            to: 'MitchStark10+testingnode@gmail.com',
+            to: email,
             subject: alarmTitle,
             text: alarmDetails,
         };
