@@ -15,7 +15,7 @@ app.post('', async (req, res) => {
     const addNewAlarmQuery = mysql.format(ADD_NEW_ACCOUNT_SQL, [email, alarmTitle, alarmDetails, sendEmail]);
     const addNewAlarmResult = await queryRunner.runQueryWithErrorHandling(addNewAlarmQuery);
 
-    if (addNewAlarmResult.success) {
+    if (addNewAlarmResult.success && sendEmail) {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -31,8 +31,16 @@ app.post('', async (req, res) => {
             text: alarmDetails,
         };
 
-        // TODO: If an error occurs during the mail, what should happen?
-        await transporter.sendMail(mailOptions);
+        try {
+            await transporter.sendMail(mailOptions);
+        } catch (error) {
+            console.error('Error occured during email send: ', error);
+            return res.status(500).json({
+                success: false,
+                message: 'Unable to send email',
+                error: error,
+            });
+        }
     }
 
     res.status(addNewAlarmResult.success ? 200 : 500).json(addNewAlarmResult);
