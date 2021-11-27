@@ -85,7 +85,9 @@
             "properties": {
                 "email": { "type": "string" },
                 "apiKey": { "type": "string" },
-                "alarmText": { "type": "string" }
+                "alarmTitle": { "type": "string" },
+                "alarmDetails": { "type": "string" },
+                "sendEmail": { "type": "boolean" }
             }
         },
         "Email": {
