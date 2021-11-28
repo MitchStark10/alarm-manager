@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router';
 import useInputState from '../../hooks/useInputState';
 import useTempText from '../../hooks/useTempText';
 import { useUserStore } from '../../stores/useUserStore';
@@ -13,6 +14,7 @@ export default function NewUser() {
     const [password, , setPasswordFromInput] = useInputState('');
     const [passwordConfirmation, , setConfirmationFromInput] = useInputState('');
     const [errorText, setErrorText] = useTempText();
+    const history = useHistory();
 
     const onSubmitNewUser = () => {
         if (!password || !passwordConfirmation || password !== passwordConfirmation) {
@@ -37,6 +39,7 @@ export default function NewUser() {
                     setEmail(emailInForm);
                     setApiKey(data.apiKey);
                     setLoginState('LOGGED_IN');
+                    history.push('/');
                 } else {
                     setErrorText(data.message, 5000);
                 }
