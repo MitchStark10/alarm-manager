@@ -1,10 +1,19 @@
+import React, { useState } from 'react';
 import { Button, Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 
 interface HeaderProps {
     userEmail?: string | null;
+    apiKey?: string | null;
 }
 
-export default function Header({ userEmail }: HeaderProps) {
+export default function Header({ userEmail, apiKey }: HeaderProps) {
+    const [revealApiKey, setRevealApiKey] = useState(false);
+
+    const handleRevealApiKey = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        setRevealApiKey(true);
+    };
+
     return (
         <Navbar bg="dark" variant="dark" expand="md">
             <Container>
@@ -20,6 +29,15 @@ export default function Header({ userEmail }: HeaderProps) {
                     </Nav>
                     {userEmail ? (
                         <NavDropdown title={'Signed in as: ' + userEmail} id="sign-out">
+                            <NavDropdown.Item>
+                                API Key:
+                                {!revealApiKey ? (
+                                    <Button className="m-2" onClick={handleRevealApiKey}>
+                                        Click to Reveal
+                                    </Button>
+                                ) : null}
+                                {revealApiKey ? apiKey : null}
+                            </NavDropdown.Item>
                             <NavDropdown.Item href="/sign-out">Sign Out</NavDropdown.Item>
                         </NavDropdown>
                     ) : (

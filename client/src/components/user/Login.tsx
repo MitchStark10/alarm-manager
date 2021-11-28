@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router';
+import shallow from 'zustand/shallow';
 import useInputState from '../../hooks/useInputState';
 import { useUserStore } from '../../stores/useUserStore';
-import shallow from 'zustand/shallow';
 
 export default function Login() {
-    const { setEmail, setLoginState } = useUserStore(
+    const { setEmail, setLoginState, setApiKey } = useUserStore(
         (state) => ({
             setLoginState: state.setLoginState,
             setEmail: state.setEmail,
+            setApiKey: state.setApiKey,
         }),
         shallow,
     );
@@ -30,6 +31,7 @@ export default function Login() {
                 if (data.success) {
                     setEmail(emailInForm);
                     setLoginState('LOGGED_IN');
+                    setApiKey(data.apiKey);
                     history.push('/');
                 } else {
                     setError('Email or login is incorrect');

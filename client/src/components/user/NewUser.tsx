@@ -4,9 +4,10 @@ import { useUserStore } from '../../stores/useUserStore';
 import './NewUser.scss';
 
 export default function NewUser() {
-    const { setEmail, setLoginState } = useUserStore((state) => ({
+    const { setEmail, setLoginState, setApiKey } = useUserStore((state) => ({
         setLoginState: state.setLoginState,
         setEmail: state.setEmail,
+        setApiKey: state.setApiKey,
     }));
     const [emailInForm, , setEmailFromInput] = useInputState('');
     const [password, , setPasswordFromInput] = useInputState('');
@@ -34,6 +35,7 @@ export default function NewUser() {
             .then((data) => {
                 if (data.success) {
                     setEmail(emailInForm);
+                    setApiKey(data.apiKey);
                     setLoginState('LOGGED_IN');
                 } else {
                     setErrorText(data.message, 5000);

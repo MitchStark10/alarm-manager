@@ -18,13 +18,14 @@ interface AssigneeOptionApiResponse {
 }
 
 function App() {
-    const { loginState, email, setEmail, setLoginState } = useUserStore();
+    const { loginState, email, apiKey, setEmail, setApiKey, setLoginState } = useUserStore();
     const setAssigneeOptions = useAssigneeOptionsStore((state) => state.setAssigneeOptions);
 
     React.useEffect(() => {
         const localStorageEmail = localStorage.getItem('userEmail');
+        const localStorageApiKey = localStorage.getItem('userApiKey');
 
-        if (!localStorageEmail) {
+        if (!localStorageEmail || !localStorageApiKey) {
             setLoginState('UNAUTHENTICATED');
             return;
         }
@@ -34,6 +35,7 @@ function App() {
             .then((data) => {
                 if (data.success) {
                     setEmail(localStorageEmail);
+                    setApiKey(localStorageApiKey);
                     setLoginState('LOGGED_IN');
                 } else {
                     setEmail('');
@@ -82,7 +84,7 @@ function App() {
 
     return (
         <>
-            <Header userEmail={email} />
+            <Header userEmail={email} apiKey={apiKey} />
             <BrowserRouter>
                 <Switch>
                     <Route path="/login">
