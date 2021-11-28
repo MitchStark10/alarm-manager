@@ -6,7 +6,7 @@ import queryRunner from '../../../services/QueryRunner';
 const app = express();
 
 const RETRIEVE_USER_SQL = `
-SELECT PassHash
+SELECT PassHash, ApiKey
 FROM Account
 WHERE Email = ?
 `;
@@ -40,6 +40,7 @@ app.post('', async (req, res) => {
     }
 
     const passHash = retrieveUserResponse.result[0].PassHash;
+    const apiKey = retrieveUserResponse.result[0].ApiKey;
     const isPasswordCorrect = await EncryptionUtils.comparePasswordToHash(
         password,
         passHash,
@@ -57,6 +58,7 @@ app.post('', async (req, res) => {
 
     res.status(isPasswordCorrect ? 200 : 403).json({
         success: isPasswordCorrect,
+        apiKey,
     });
 });
 

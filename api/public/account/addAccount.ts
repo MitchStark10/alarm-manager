@@ -1,8 +1,8 @@
 import express from 'express';
 import mysql from 'mysql';
-import queryRunner from '../../../services/QueryRunner';
-import EncryptionUtils from '../../../services/EncryptionUtils';
 import CookieManager from '../../../services/CookieManager';
+import EncryptionUtils from '../../../services/EncryptionUtils';
+import queryRunner from '../../../services/QueryRunner';
 const app = express();
 
 const ADD_NEW_ACCOUNT_SQL = `
@@ -14,10 +14,11 @@ VALUES (?, ?, ?, ?)
 app.post('', async (req, res) => {
     const { email, password } = req.body;
     const sessionCookie = EncryptionUtils.generateKey();
+    const apiKey = EncryptionUtils.generateKey();
     const addNewAccountQuery = mysql.format(ADD_NEW_ACCOUNT_SQL, [
         email,
         await EncryptionUtils.encryptPassword(password),
-        EncryptionUtils.generateKey(),
+        apiKey,
         sessionCookie,
     ]);
     const addNewAccountResult = await queryRunner.runQueryWithErrorHandling(
@@ -29,9 +30,10 @@ app.post('', async (req, res) => {
         CookieManager.setCookie(res, sessionCookie);
     }
 
-    res.status(addNewAccountResult.success ? 200 : 500).json(
-        addNewAccountResult,
-    );
+    res.status(addNewAccountResult.success ? 200 : 500).json({
+        success: addNewAccountResult.success,
+        apiKey,
+    });
 });
 
 export default app;
