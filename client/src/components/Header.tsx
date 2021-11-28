@@ -8,10 +8,14 @@ interface HeaderProps {
 
 export default function Header({ userEmail, apiKey }: HeaderProps) {
     const [revealApiKey, setRevealApiKey] = useState(false);
+    const [wasApiKeyCopied, setWasApiKeyCopied] = useState(false);
 
-    const handleRevealApiKey = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        setRevealApiKey(true);
+    const copyApiKeyToClipboard = () => {
+        if (apiKey) {
+            navigator.clipboard.writeText(apiKey);
+            setWasApiKeyCopied(true);
+            setTimeout(() => setWasApiKeyCopied(false), 2000);
+        }
     };
 
     return (
@@ -30,13 +34,24 @@ export default function Header({ userEmail, apiKey }: HeaderProps) {
                     {userEmail ? (
                         <NavDropdown title={'Signed in as: ' + userEmail} id="sign-out">
                             <NavDropdown.Item>
-                                API Key:
-                                {!revealApiKey ? (
-                                    <Button className="m-2" onClick={handleRevealApiKey}>
-                                        Click to Reveal
-                                    </Button>
-                                ) : null}
-                                {revealApiKey ? apiKey : null}
+                                <span onClick={(e) => e.stopPropagation()}>
+                                    API Key:
+                                    {!revealApiKey ? (
+                                        <Button className="m-2" onClick={() => setRevealApiKey(true)}>
+                                            Click to Reveal
+                                        </Button>
+                                    ) : null}
+                                    {revealApiKey ? (
+                                        <>
+                                            <p>{apiKey}</p>
+                                            {!wasApiKeyCopied ? (
+                                                <Button onClick={copyApiKeyToClipboard}>Copy</Button>
+                                            ) : (
+                                                <Button variant="secondary">Copied!</Button>
+                                            )}
+                                        </>
+                                    ) : null}
+                                </span>
                             </NavDropdown.Item>
                             <NavDropdown.Item href="/sign-out">Sign Out</NavDropdown.Item>
                         </NavDropdown>
