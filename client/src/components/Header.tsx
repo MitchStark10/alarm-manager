@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import './Header.scss';
 
 interface HeaderProps {
     userEmail?: string | null;
