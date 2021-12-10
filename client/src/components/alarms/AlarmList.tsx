@@ -15,7 +15,7 @@ export default function AlarmList() {
     const [alarmList, setAlarmList] = useState<Array<AlarmData>>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
-    const [toggleToRefreshList, forceAlarmListRefresh] = useToggle();
+    const [toggleToRefreshAlarmList, forceAlarmListRefresh] = useToggle();
     const history = useHistory();
 
     useEffect(() => {
@@ -50,7 +50,7 @@ export default function AlarmList() {
         return () => {
             isMounted = false;
         };
-    }, [email, toggleToRefreshList]);
+    }, [email, toggleToRefreshAlarmList]);
 
     if (!email) {
         history.push('/login');
