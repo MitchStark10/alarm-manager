@@ -17,7 +17,7 @@ export default function AlarmList() {
     const [alarmList, setAlarmList] = useState<Array<AlarmData>>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
-    const [assigneeFilter, setAssigneeFilter] = useState('');
+    const [assigneeFilter, setAssigneeFilter] = useState('All');
     const [toggleToRefreshAlarmList, forceAlarmListRefresh] = useToggle();
     const history = useHistory();
 
@@ -66,10 +66,17 @@ export default function AlarmList() {
 
     const alarmListGroupedByTitle = alarmList.reduce(
         (aggregatedData: AlarmListGrouped, alarm: AlarmData): AlarmListGrouped => {
-            if (aggregatedData[alarm.AlarmTitle]) {
-                aggregatedData[alarm.AlarmTitle].push(alarm);
-            } else {
-                aggregatedData[alarm.AlarmTitle] = [alarm];
+            const doesFilterMatch =
+                assigneeFilter === 'All' ||
+                alarm.AssigneeID === assigneeFilter ||
+                (assigneeFilter === 'Unassigned' && !alarm.AssigneeID);
+
+            if (doesFilterMatch) {
+                if (aggregatedData[alarm.AlarmTitle]) {
+                    aggregatedData[alarm.AlarmTitle].push(alarm);
+                } else {
+                    aggregatedData[alarm.AlarmTitle] = [alarm];
+                }
             }
 
             return aggregatedData;
@@ -77,7 +84,7 @@ export default function AlarmList() {
         {},
     );
 
-    const assigneeOptions: string[] = [''].concat(
+    const assigneeOptions: string[] = ['All', 'Unassigned'].concat(
         uniq(alarmList)
             .map((alarm) => alarm.AssigneeID)
             .filter(filterNullish),
