@@ -5,6 +5,7 @@ import { filterNullish } from '../../filterUndefined';
 import useToggle from '../../hooks/useToggle';
 import { useUserStore } from '../../stores/useUserStore';
 import AlarmCard from './AlarmCard';
+import './AlarmList.css';
 import { AlarmListCard } from './AlarmListCard';
 import { AlarmData } from './AlarmTypes';
 
@@ -94,8 +95,7 @@ export default function AlarmList() {
 
     return (
         <>
-            <div className="d-flex flex-column justify-content-center align-items-center">
-                <h3 className="border-bottom border-dark px-5 mb-3">Alarms found</h3>
+            <div className="d-flex flex-column justify-content-start align-items-start p-3">
                 {assigneeOptions.length ? (
                     <>
                         <label>Filter By Assignee:</label>
@@ -109,29 +109,31 @@ export default function AlarmList() {
                     </>
                 ) : null}
                 {error && <p className="error-text">{error.toString()}</p>}
-                {Object.entries(alarmListGroupedByTitle).map((keyValuePair, index) => {
-                    const groupedAlarms = keyValuePair[1];
+                <div className="grid-container">
+                    {Object.entries(alarmListGroupedByTitle).map((keyValuePair, index) => {
+                        const groupedAlarms = keyValuePair[1];
 
-                    if (groupedAlarms.length > 1) {
+                        if (groupedAlarms.length > 1) {
+                            return (
+                                <AlarmListCard
+                                    key={index}
+                                    alarms={groupedAlarms}
+                                    refreshAlarmList={forceAlarmListRefresh}
+                                    email={email}
+                                />
+                            );
+                        }
+
                         return (
-                            <AlarmListCard
+                            <AlarmCard
                                 key={index}
-                                alarms={groupedAlarms}
                                 refreshAlarmList={forceAlarmListRefresh}
+                                data={groupedAlarms[0]}
                                 email={email}
                             />
                         );
-                    }
-
-                    return (
-                        <AlarmCard
-                            key={index}
-                            refreshAlarmList={forceAlarmListRefresh}
-                            data={groupedAlarms[0]}
-                            email={email}
-                        />
-                    );
-                })}
+                    })}
+                </div>
             </div>
         </>
     );

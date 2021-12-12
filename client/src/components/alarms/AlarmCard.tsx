@@ -100,7 +100,7 @@ export default function AlarmCard({ data, email, refreshAlarmList }: AlarmCardPr
                         <b>Assigned To: {data.AssigneeID}</b>
                     </Card.Text>
                 ) : null}
-                <Card.Text>{data.AlarmDateTime}</Card.Text>
+                <Card.Text>{new Date(data.AlarmDateTime).toLocaleString()}</Card.Text>
                 <Card.Text>{data.AlarmDetails}</Card.Text>
                 {error && <p className="error-text">{error}</p>}
                 <div className="d-flex justify-content-between">
