@@ -1,12 +1,12 @@
+import uniq from 'lodash/uniq';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import { filterNullish } from '../../filterUndefined';
 import useToggle from '../../hooks/useToggle';
 import { useUserStore } from '../../stores/useUserStore';
 import AlarmCard from './AlarmCard';
 import { AlarmListCard } from './AlarmListCard';
 import { AlarmData } from './AlarmTypes';
-import uniq from 'lodash/uniq';
-import {filterNullish} from '../../filterUndefined';
 
 interface AlarmListGrouped {
     [key: string]: AlarmData[];
@@ -77,17 +77,28 @@ export default function AlarmList() {
         {},
     );
 
-    const assigneeOptions: string[] = [''];
-    assigneeOptions.concat(uniq(alarmList).map((alarm) => alarm.AssigneeID).filter(filterNullish));
+    const assigneeOptions: string[] = [''].concat(
+        uniq(alarmList)
+            .map((alarm) => alarm.AssigneeID)
+            .filter(filterNullish),
+    );
 
     return (
         <>
             <div className="d-flex flex-column justify-content-center align-items-center">
                 <h3 className="border-bottom border-dark px-5 mb-3">Alarms found</h3>
-                <label>Filter By Assignee:</label>
-                <select value={assigneeFilter} onChange={(e) => setAssigneeFilter(e.target.value)}>
-                    {assigneeOptions.map((assignee) => <option key={assignee} value={assignee}>{assignee}</option>)}
-                </select>
+                {assigneeOptions.length ? (
+                    <>
+                        <label>Filter By Assignee:</label>
+                        <select value={assigneeFilter} onChange={(e) => setAssigneeFilter(e.target.value)}>
+                            {assigneeOptions.map((assignee) => (
+                                <option key={assignee} value={assignee}>
+                                    {assignee}
+                                </option>
+                            ))}
+                        </select>
+                    </>
+                ) : null}
                 {error && <p className="error-text">{error.toString()}</p>}
                 {Object.entries(alarmListGroupedByTitle).map((keyValuePair, index) => {
                     const groupedAlarms = keyValuePair[1];
