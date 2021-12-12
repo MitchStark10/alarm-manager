@@ -58,7 +58,7 @@ export const AlarmListCard = ({ alarms, email, refreshAlarmList }: AlarmListCard
     if (seeIndividualCards) {
         return (
             <>
-                {alarms.map((alarmData, index) => (
+                {alarms.sort(alarmDateTimeComparator).map((alarmData, index) => (
                     <AlarmCard key={index} data={alarmData} refreshAlarmList={refreshAlarmList} email={email} />
                 ))}
             </>
