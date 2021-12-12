@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import useInputState from '../../hooks/useInputState';
 import useToggle from '../../hooks/useToggle';
-import {useAssigneeOptionsStore} from '../../stores/useAssigneeOptionsStore';
+import { useAssigneeOptionsStore } from '../../stores/useAssigneeOptionsStore';
 import { AlarmData } from './AlarmTypes';
 
 interface AlarmCardProps {
@@ -12,7 +12,7 @@ interface AlarmCardProps {
     refreshAlarmList: () => void;
 }
 
-export default function AlarmCard({ data, refreshAlarmList, email }: AlarmCardProps) {
+export default function AlarmCard({ data, email, refreshAlarmList }: AlarmCardProps) {
     const [error, setError] = useState('');
     const [isAssigningCard, toggleIsAssigningCard] = useToggle(false);
     const [assignee, , setAssignee] = useInputState('');
@@ -50,13 +50,15 @@ export default function AlarmCard({ data, refreshAlarmList, email }: AlarmCardPr
             headers: {
                 'Content-Type': 'application/json',
             },
-        }).then(() => {
-            toggleIsAssigningCard();
-            refreshAlarmList();
-        }).catch((error) => {
-            console.error(error);
-            setError(error);
-        });
+        })
+            .then(() => {
+                toggleIsAssigningCard();
+                refreshAlarmList();
+            })
+            .catch((error) => {
+                console.error(error);
+                setError(error);
+            });
     };
 
     let cardBody;
@@ -68,7 +70,7 @@ export default function AlarmCard({ data, refreshAlarmList, email }: AlarmCardPr
                 <datalist id="assignees">
                     {assigneeOptions?.map((option, index) => {
                         console.log('iterating', option);
-                        return <option key={index} value={option}/>;
+                        return <option key={index} value={option} />;
                     })}
                 </datalist>
                 <input
@@ -93,7 +95,11 @@ export default function AlarmCard({ data, refreshAlarmList, email }: AlarmCardPr
         cardBody = (
             <Card.Body>
                 <Card.Title>{data.AlarmTitle}</Card.Title>
-                {data.AssigneeID ? <Card.Text><b>Assigned To: {data.AssigneeID}</b></Card.Text> : null}
+                {data.AssigneeID ? (
+                    <Card.Text>
+                        <b>Assigned To: {data.AssigneeID}</b>
+                    </Card.Text>
+                ) : null}
                 <Card.Text>{data.AlarmDateTime}</Card.Text>
                 <Card.Text>{data.AlarmDetails}</Card.Text>
                 {error && <p className="error-text">{error}</p>}

@@ -84,10 +84,12 @@ export default function AlarmList() {
         {},
     );
 
+    if (Object.entries(alarmListGroupedByTitle).length === 0 && assigneeFilter !== 'All') {
+        setAssigneeFilter('All');
+    }
+
     const assigneeOptions: string[] = ['All', 'Unassigned'].concat(
-        uniq(alarmList)
-            .map((alarm) => alarm.AssigneeID)
-            .filter(filterNullish),
+        uniq(alarmList.map((alarm) => alarm.AssigneeID).filter(filterNullish)),
     );
 
     return (

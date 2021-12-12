@@ -24,7 +24,7 @@ const alarmDateTimeComparator = (a: AlarmData, b: AlarmData): number => {
     return 0;
 };
 
-export const AlarmListCard = ({ alarms, refreshAlarmList, email }: AlarmListCardProps) => {
+export const AlarmListCard = ({ alarms, email, refreshAlarmList }: AlarmListCardProps) => {
     const [seeIndividualCards, setSeeIndividualCards] = useState(false);
     const [pendingDelete, setPendingDelete] = useState(false);
 
