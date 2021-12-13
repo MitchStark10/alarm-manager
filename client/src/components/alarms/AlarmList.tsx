@@ -85,7 +85,11 @@ export default function AlarmList() {
         {},
     );
 
-    if (Object.entries(alarmListGroupedByTitle).length === 0 && assigneeFilter !== 'All') {
+    if (
+        Object.entries(alarmListGroupedByTitle).length === 0 &&
+        assigneeFilter !== 'All' &&
+        assigneeFilter !== 'Unassigned'
+    ) {
         setAssigneeFilter('All');
     }
 
@@ -97,19 +101,23 @@ export default function AlarmList() {
         <>
             <div className="d-flex flex-column justify-content-start align-items-start p-3">
                 {assigneeOptions.length ? (
-                    <>
+                    <div className="d-flex flex-row justify-content-start align-items-center p-3">
                         <label>Filter By Assignee:</label>
-                        <select value={assigneeFilter} onChange={(e) => setAssigneeFilter(e.target.value)}>
+                        <select
+                            style={{ marginLeft: '1rem' }}
+                            value={assigneeFilter}
+                            onChange={(e) => setAssigneeFilter(e.target.value)}
+                        >
                             {assigneeOptions.map((assignee) => (
                                 <option key={assignee} value={assignee}>
                                     {assignee}
                                 </option>
                             ))}
                         </select>
-                    </>
+                    </div>
                 ) : null}
                 {error && <p className="error-text">{error.toString()}</p>}
-                <div className="grid-container">
+                <div className="grid-container p-3">
                     {Object.entries(alarmListGroupedByTitle).map((keyValuePair, index) => {
                         const groupedAlarms = keyValuePair[1];
 
