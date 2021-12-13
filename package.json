@@ -1,6 +1,6 @@
 {
   "name": "log-manager",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Log manager to aggregate logs across servers in a single spot.",
   "main": "dist/server.js",
   "scripts": {
